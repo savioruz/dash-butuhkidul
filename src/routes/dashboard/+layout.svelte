@@ -1,0 +1,47 @@
+<script lang="ts">
+	import AppSidebar from '$lib/components/app-sidebar.svelte';
+	import { Separator } from '$lib/components/ui/separator/index.js';
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
+	import ThemeToggle from '@/components/ui/theme-toggle/theme-toggle.svelte';
+	import { LogOut } from 'lucide-svelte';
+	import LanguageSwitcher from '@/components/ui/language-switcher';
+	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+
+	let { children } = $props();
+
+	function handleLogout() {
+		if (browser) {
+			document.cookie = 'accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+			document.cookie = 'refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+		}
+		goto('/');
+	}
+</script>
+
+<Sidebar.Provider>
+	<AppSidebar />
+	<Sidebar.Inset>
+		<header
+			class="flex h-16 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12"
+		>
+			<div class="flex w-full items-center justify-between px-4">
+				<div class="flex items-center gap-2">
+					<Sidebar.Trigger class="-ml-1" />
+					<Separator orientation="vertical" class="mr-2 data-[orientation=vertical]:h-4" />
+				</div>
+				<div class="flex items-center gap-2">
+					<ThemeToggle />
+					<Button onclick={handleLogout} variant="ghost" size="icon" class="text-red-500">
+						<LogOut />
+					</Button>
+					<LanguageSwitcher />
+				</div>
+			</div>
+		</header>
+		<div class="flex flex-1 flex-col gap-4 md:p-8">
+			{@render children()}
+		</div>
+	</Sidebar.Inset>
+</Sidebar.Provider>

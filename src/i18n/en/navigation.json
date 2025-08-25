@@ -2,5 +2,15 @@
 	"home": "Home",
 	"products": "Products",
 	"blog": "Blog",
-	"contact": "Contact"
+	"contact": "Contact",
+	"sidebar": {
+		"platform": "Platform",
+		"finance": {
+			"title": "Finance",
+			"categories": "Categories",
+			"income_transactions": "Income Transactions",
+			"expense_transactions": "Expense Transactions"
+		}
+	},
+	"finance": "Finance Homepage"
 }

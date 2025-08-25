@@ -2,5 +2,15 @@
 	"home": "Beranda",
 	"products": "Produk",
 	"blog": "Blog",
-	"contact": "Kontak"
+	"contact": "Kontak",
+	"sidebar": {
+		"platform": "Platform",
+		"finance": {
+			"title": "Keuangan",
+			"categories": "Kategori",
+			"income_transactions": "Transaksi Pemasukan",
+			"expense_transactions": "Transaksi Pengeluaran"
+		}
+	},
+	"finance": "Keuangan Homepage"
 }

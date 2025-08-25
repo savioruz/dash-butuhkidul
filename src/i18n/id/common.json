@@ -7,5 +7,146 @@
 	"not_found": "Maaf, halaman yang Anda cari tidak ada.",
 	"back_to_home": "Kembali ke Beranda",
 	"language": "Bahasa",
-	"logo": "🇮🇩"
+	"logo": "🇮🇩",
+	"status": {
+		"active": "Aktif",
+		"inactive": "Tidak Aktif"
+	},
+	"actions": {
+		"submit": "Kirim",
+		"cancel": "Batal",
+		"edit": "Edit",
+		"delete": "Hapus"
+	},
+	"category": {
+		"title": "Kategori",
+		"subtitle": "Kelola kategori transaksi Anda",
+		"add": "Tambah Kategori",
+		"edit": "Ubah Kategori",
+		"delete": "Hapus Kategori",
+		"refresh": "Muat Ulang",
+		"form": {
+			"add_title": "Tambah Kategori Baru",
+			"edit_title": "Ubah Kategori",
+			"add_description": "Buat kategori baru untuk mengorganisir transaksi Anda.",
+			"edit_description": "Perbarui informasi kategori di bawah ini.",
+			"name": "Nama Kategori",
+			"name_placeholder": "Masukkan nama kategori",
+			"name_required": "Nama kategori wajib diisi",
+			"name_min_length": "Nama kategori minimal 2 karakter",
+			"name_max_length": "Nama kategori maksimal 100 karakter",
+			"description": "Deskripsi",
+			"description_placeholder": "Masukkan deskripsi kategori",
+			"description_optional": "(opsional)",
+			"description_max_length": "Deskripsi maksimal 255 karakter",
+			"active": "Kategori Aktif",
+			"active_description": "Kategori tidak aktif tidak akan muncul di form transaksi tetapi tetap ada di data Anda.",
+			"submit_create": "Buat Kategori",
+			"submit_update": "Perbarui Kategori",
+			"cancel": "Batal",
+			"creating": "Membuat...",
+			"updating": "Memperbarui..."
+		},
+		"stats": {
+			"total": "Total Kategori",
+			"active": "Kategori Aktif",
+			"inactive": "Kategori Tidak Aktif",
+			"with_descriptions": "Dengan Deskripsi"
+		},
+		"list": {
+			"empty_title": "Tidak ada kategori ditemukan",
+			"empty_subtitle": "Mulai dengan membuat kategori pertama Anda",
+			"name": "Nama",
+			"description": "Deskripsi",
+			"status": "Status",
+			"actions": "Aksi",
+			"edit": "Ubah",
+			"delete": "Hapus",
+			"confirm_delete": "Apakah Anda yakin ingin menghapus kategori ini?"
+		},
+		"messages": {
+			"created": "Kategori berhasil dibuat!",
+			"updated": "Kategori berhasil diperbarui!",
+			"deleted": "Kategori berhasil dihapus!",
+			"create_error": "Gagal membuat kategori",
+			"update_error": "Gagal memperbarui kategori",
+			"delete_error": "Gagal menghapus kategori",
+			"load_error": "Gagal memuat kategori"
+		}
+	},
+	"auth": {
+		"login": {
+			"title": "Masuk",
+			"description": "Masukkan email Anda di bawah untuk masuk ke akun Anda",
+			"email": "Email",
+			"email_placeholder": "mail@example.com",
+			"password": "Kata Sandi",
+			"submit": "Masuk",
+			"signing_in": "Sedang masuk...",
+			"error_default": "Login gagal. Silakan periksa kredensial Anda.",
+			"error_invalid_response": "Respons tidak valid: token hilang"
+		}
+	},
+	"transaction": {
+		"loading": "Memuat transaksi...",
+		"not_found": "Tidak ada transaksi",
+		"refresh": "Muat Ulang",
+		"stats": {
+			"total_transactions": "Total Transaksi",
+			"active_transactions": "Transaksi Aktif",
+			"inactive_transactions": "Transaksi Tidak Aktif"
+		},
+		"expense": {
+			"title": "Pengeluaran",
+			"subtitle": "Kelola transaksi pengeluaran Anda",
+			"add": "Tambah Pengeluaran",
+			"total_amount": "Total Pengeluaran"
+		},
+		"income": {
+			"title": "Pemasukan",
+			"subtitle": "Kelola transaksi pemasukan Anda",
+			"add": "Tambah Pemasukan",
+			"total_amount": "Total Pemasukan"
+		},
+		"forms": {
+			"add_income": "Tambah Transaksi Pemasukan",
+			"add_expense": "Tambah Transaksi Pengeluaran",
+			"submit": "Simpan",
+			"update": "Perbarui",
+			"edit_transaction": "Edit Transaksi"
+		},
+		"fields": {
+			"amount": "Jumlah",
+			"date": "Tanggal",
+			"description": "Deskripsi",
+			"category": "Kategori",
+			"proof": "File Bukti",
+			"active": "Aktif",
+			"type": "Tipe",
+			"actions": "Aksi"
+		},
+		"actions": {
+			"view_proof": "Bukti"
+		},
+		"list": {
+			"empty_title": "Tidak ada transaksi ditemukan",
+			"empty_subtitle": "Mulai dengan membuat transaksi pertama Anda",
+			"amount": "Jumlah",
+			"date": "Tanggal",
+			"category": "Kategori",
+			"description": "Deskripsi",
+			"status": "Status",
+			"actions": "Aksi",
+			"edit": "Edit",
+			"delete": "Hapus",
+			"confirm_delete": "Apakah Anda yakin ingin menghapus transaksi ini?",
+			"proof": "Bukti",
+			"view_proof": "Lihat Bukti"
+		},
+		"messages": {
+			"deleted": "Transaksi berhasil dihapus!",
+			"delete_error": "Gagal menghapus transaksi",
+			"load_error": "Gagal memuat transaksi"
+		}
+	}
 }

@@ -1,3 +1,6 @@
+const base_url = import.meta.env.VITE_BASE_URL || '/';
+const domainTrim = base_url.replace(/https?:\/\//, '').replace(/\/$/, '');
+
 export interface NavItem {
 	href: string;
 	label: string;
@@ -6,23 +9,13 @@ export interface NavItem {
 
 export const navigationConfig: NavItem[] = [
 	{
-		href: '/',
+		href: base_url,
 		label: 'Home',
 		translationKey: 'home'
 	},
 	{
-		href: '/products',
-		label: 'Products',
-		translationKey: 'products'
-	},
-	{
-		href: '/blog',
-		label: 'Blog',
-		translationKey: 'blog'
-	},
-	{
-		href: '/contact',
-		label: 'Contact',
-		translationKey: 'contact'
+		href: `https://kas.${domainTrim}`,
+		label: 'Finance',
+		translationKey: 'finance'
 	}
 ];

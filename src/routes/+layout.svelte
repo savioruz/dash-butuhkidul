@@ -11,9 +11,6 @@
 
 	let { children, data } = $props();
 
-	let className = $state('');
-	export { className as class };
-
 	let isI18nReady = $state(false);
 
 	onMount(async () => {
@@ -65,13 +62,11 @@
 {#if page.error?.message}
 	<Error status={page.status} message={page.error.message} />
 {:else}
-	{#if isI18nReady}
+	{#if isI18nReady && !page.url.pathname.startsWith('/dashboard')}
 		<Navbar />
 	{/if}
-	<main class="flex min-h-screen flex-col items-center justify-center py-8">
-		<div
-			class="flex w-full max-w-sm flex-col items-center justify-center px-4 md:max-w-screen-md md:px-0"
-		>
+	<main class="flex min-h-screen flex-col items-center justify-center">
+		<div class="flex w-full flex-col items-center justify-center px-4 md:px-0">
 			{@render children()}
 		</div>
 	</main>

@@ -6,8 +6,11 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { cn } from '$lib/utils';
 
-	let className = '';
-	export { className as class };
+	interface Props {
+		class?: string;
+	}
+
+	let { class: className = '' }: Props = $props();
 </script>
 
 <Button onclick={toggleMode} variant="ghost" size="icon" class={cn(className)}>
