@@ -197,55 +197,6 @@
 			/>
 		</div>
 	{:else}
-		<!-- Statistics -->
-		<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-			<Card.Root>
-				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
-					<Card.Title class="text-sm font-medium">{$t('common.category.stats.total')}</Card.Title>
-				</Card.Header>
-				<Card.Content>
-					<div class="text-2xl font-bold">{categories.length}</div>
-				</Card.Content>
-			</Card.Root>
-
-			<Card.Root>
-				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
-					<Card.Title class="text-sm font-medium">{$t('common.category.stats.active')}</Card.Title>
-				</Card.Header>
-				<Card.Content>
-					<div class="text-2xl font-bold text-green-600">
-						{categories.filter((c) => c.active).length}
-					</div>
-				</Card.Content>
-			</Card.Root>
-
-			<Card.Root>
-				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
-					<Card.Title class="text-sm font-medium">{$t('common.category.stats.inactive')}</Card.Title
-					>
-				</Card.Header>
-				<Card.Content>
-					<div class="text-2xl font-bold text-gray-600">
-						{categories.filter((c) => !c.active).length}
-					</div>
-				</Card.Content>
-			</Card.Root>
-
-			<Card.Root>
-				<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
-					<Card.Title class="text-sm font-medium"
-						>{$t('common.category.stats.with_descriptions')}</Card.Title
-					>
-				</Card.Header>
-				<Card.Content>
-					<div class="text-2xl font-bold text-blue-600">
-						{categories.filter((c) => c.description && c.description.trim()).length}
-					</div>
-				</Card.Content>
-			</Card.Root>
-		</div>
-
-		<!-- Categories List -->
 		<CategoryList
 			{categories}
 			{isLoading}
