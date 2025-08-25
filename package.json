@@ -47,6 +47,7 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"@sveltejs/adapter-cloudflare": "^7.2.2",
 		"lucide-svelte": "^0.537.0",
 		"mode-watcher": "^1.1.0",
 		"sveltekit-i18n": "^2.4.2"

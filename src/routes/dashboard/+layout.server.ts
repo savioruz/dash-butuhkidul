@@ -27,8 +27,13 @@ function isTokenExpired(token: string): boolean {
 export const load: LayoutServerLoad = async ({ cookies }) => {
 	const accessToken = cookies.get('accessToken');
 
-	// No token or expired token - redirect to login
+	console.log('Dashboard access check:', {
+		hasToken: !!accessToken,
+		tokenPreview: accessToken ? accessToken.substring(0, 20) + '...' : 'none'
+	});
+
 	if (!accessToken || isTokenExpired(accessToken)) {
+		console.log('Redirecting to login:', !accessToken ? 'no token' : 'expired token');
 		throw redirect(303, '/');
 	}
 

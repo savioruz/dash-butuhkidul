@@ -29,20 +29,52 @@
 		try {
 			const response = await authApi.login({ email, password });
 
-			if (browser) {
-				// Store tokens in cookies
-				document.cookie = `accessToken=${response.access_token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax`;
-				if (response.refresh_token) {
-					document.cookie = `refreshToken=${response.refresh_token}; path=/; max-age=${60 * 60 * 24 * 30}; SameSite=Lax`;
-				}
-			}
+			console.log('Login response:', response); // Debug log
 
-			// Redirect to dashboard
-			await goto('/dashboard');
+			if (browser) {
+				const secureFlag = window.location.protocol === 'https:' ? 'Secure; ' : '';
+
+				// Set cookies with more explicit settings
+				const accessTokenCookie = `accessToken=${response.access_token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax; ${secureFlag}`;
+				const refreshTokenCookie = response.refresh_token
+					? `refreshToken=${response.refresh_token}; path=/; max-age=${60 * 60 * 24 * 30}; SameSite=Lax; ${secureFlag}`
+					: '';
+
+				document.cookie = accessTokenCookie;
+				if (refreshTokenCookie) {
+					document.cookie = refreshTokenCookie;
+				}
+
+				console.log('Cookies set:', {
+					accessToken: accessTokenCookie,
+					refreshToken: refreshTokenCookie,
+					currentCookies: document.cookie
+				});
+
+				// Verify cookies were set
+				setTimeout(() => {
+					const cookieCheck = document.cookie;
+					console.log('Cookie verification:', {
+						allCookies: cookieCheck,
+						hasAccessToken: cookieCheck.includes('accessToken=')
+					});
+
+					// Try multiple redirect methods for better compatibility
+					try {
+						// Method 1: Use SvelteKit goto first
+						goto('/dashboard');
+					} catch (gotoError) {
+						console.log('goto failed, trying window.location:', gotoError);
+						// Method 2: Fallback to window.location
+						window.location.href = '/dashboard';
+					}
+				}, 100);
+			} else {
+				await goto('/dashboard');
+			}
 		} catch (error) {
 			console.error('Login error:', error);
 			errorMessage = 'Login failed. Please check your credentials.';
-		} finally {
 			isLoading = false;
 		}
 	}

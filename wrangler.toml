@@ -1,0 +1,16 @@
+name = "dash-butuhkidul"
+compatibility_date = "2025-08-25"
+
+[env.production]
+name = "dash-butuhkidul"
+
+[env.development]
+name = "dash-butuhkidul-dev"
+
+[[env.production.routes]]
+pattern = "*/*"
+zone_name = "*"
+
+[[env.development.routes]]
+pattern = "*/*"
+zone_name = "*"
