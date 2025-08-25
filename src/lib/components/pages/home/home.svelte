@@ -7,6 +7,7 @@
 	import { authApi } from '$lib/api/auth.js';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import { setTokens } from '$lib/auth.js';
 
 	let email = $state('');
 	let password = $state('');
@@ -32,43 +33,16 @@
 			console.log('Login response:', response); // Debug log
 
 			if (browser) {
-				const secureFlag = window.location.protocol === 'https:' ? 'Secure; ' : '';
+				// Store tokens in localStorage using auth utility
+				setTokens(response.access_token, response.refresh_token);
 
-				// Set cookies with more explicit settings
-				const accessTokenCookie = `accessToken=${response.access_token}; path=/; max-age=${60 * 60 * 24 * 7}; SameSite=Lax; ${secureFlag}`;
-				const refreshTokenCookie = response.refresh_token
-					? `refreshToken=${response.refresh_token}; path=/; max-age=${60 * 60 * 24 * 30}; SameSite=Lax; ${secureFlag}`
-					: '';
-
-				document.cookie = accessTokenCookie;
-				if (refreshTokenCookie) {
-					document.cookie = refreshTokenCookie;
-				}
-
-				console.log('Cookies set:', {
-					accessToken: accessTokenCookie,
-					refreshToken: refreshTokenCookie,
-					currentCookies: document.cookie
+				console.log('Tokens stored in localStorage:', {
+					accessToken: response.access_token ? 'stored' : 'missing',
+					refreshToken: response.refresh_token ? 'stored' : 'missing'
 				});
 
-				// Verify cookies were set
-				setTimeout(() => {
-					const cookieCheck = document.cookie;
-					console.log('Cookie verification:', {
-						allCookies: cookieCheck,
-						hasAccessToken: cookieCheck.includes('accessToken=')
-					});
-
-					// Try multiple redirect methods for better compatibility
-					try {
-						// Method 1: Use SvelteKit goto first
-						goto('/dashboard');
-					} catch (gotoError) {
-						console.log('goto failed, trying window.location:', gotoError);
-						// Method 2: Fallback to window.location
-						window.location.href = '/dashboard';
-					}
-				}, 100);
+				// Redirect to dashboard
+				await goto('/dashboard');
 			} else {
 				await goto('/dashboard');
 			}

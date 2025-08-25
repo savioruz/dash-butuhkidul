@@ -6,17 +6,18 @@
 	import ThemeToggle from '@/components/ui/theme-toggle/theme-toggle.svelte';
 	import { LogOut } from 'lucide-svelte';
 	import LanguageSwitcher from '@/components/ui/language-switcher';
-	import { goto } from '$app/navigation';
-	import { browser } from '$app/environment';
+	import { requireAuth, logout } from '$lib/auth';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
 
+	// Check authentication on mount
+	onMount(() => {
+		requireAuth();
+	});
+
 	function handleLogout() {
-		if (browser) {
-			document.cookie = 'accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-			document.cookie = 'refreshToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-		}
-		goto('/');
+		logout();
 	}
 </script>
 
