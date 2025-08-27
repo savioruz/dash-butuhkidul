@@ -1,5 +1,5 @@
 export const siteConfig = {
-	name: 'dashboard butuhkidul',
+	name: 'BUTUHKIDUL',
 	logo: '/favicon.svg',
 	description: 'A dashboard for managing butuhkidul site',
 	keywords: '',
