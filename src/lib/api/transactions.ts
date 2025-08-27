@@ -6,7 +6,7 @@ export interface CreateTransactionRequest {
 	type: 'income' | 'expense';
 	description?: string;
 	category: string;
-	file: File;
+	file?: File;
 	active: boolean;
 }
 
@@ -60,15 +60,18 @@ export const transactionsApi = {
 		formData.append('type', data.type);
 		formData.append('category', data.category);
 		formData.append('active', String(data.active));
-		formData.append('file', data.file);
 
 		if (data.description) {
 			formData.append('description', data.description);
 		}
 
+		if (data.file) {
+			formData.append('file', data.file);
+		}
+
 		return apiClient.request('/v1/transactions', {
 			method: 'POST',
-			headers: {}, // Remove Content-Type to let browser set it for FormData
+			headers: {},
 			body: formData
 		});
 	},
@@ -85,7 +88,7 @@ export const transactionsApi = {
 
 		return apiClient.request(`/v1/transactions/${id}`, {
 			method: 'PATCH',
-			headers: {}, // Remove Content-Type to let browser set it for FormData
+			headers: {},
 			body: formData
 		});
 	},

@@ -51,7 +51,7 @@
 		if (transaction) {
 			formData.amount = transaction.amount;
 			formData.date = transaction.date;
-			formData.description = transaction.description;
+			formData.description = transaction.description || '';
 			formData.category = transaction.category;
 			formData.active = transaction.active;
 		} else {
@@ -76,11 +76,6 @@
 
 		if (formData.amount <= 0) {
 			message = 'Amount must be greater than 0';
-			return false;
-		}
-
-		if (!isEdit && !selectedFile) {
-			message = 'Please select a proof file';
 			return false;
 		}
 
@@ -131,8 +126,7 @@
 				type: formData.type,
 				description: formData.description,
 				category: formData.category,
-				active: formData.active,
-				file: File.prototype
+				active: formData.active
 			};
 
 			if (selectedFile) {
@@ -214,17 +208,10 @@
 		</div>
 
 		<div>
-			<Label for="proof">{$t('common.transaction.fields.proof')}{!isEdit ? ' *' : ''}</Label>
-			<Input
-				id="proof"
-				type="file"
-				accept="image/*,.pdf"
-				onchange={handleFileChange}
-				required={!isEdit}
-			/>
+			<Label for="proof">{$t('common.transaction.fields.proof')} (Optional)</Label>
+			<Input id="proof" type="file" accept="image/*,.pdf" onchange={handleFileChange} />
 			<p class="mt-1 text-xs text-gray-500">
-				Upload an image (JPEG, PNG, GIF, WebP) or PDF file (max 5MB)
-				{#if isEdit}(Optional when editing){/if}
+				Upload an image (JPEG, PNG, GIF, WebP) or PDF file (max 2MB) - Optional
 			</p>
 			{#if selectedFile}
 				<p class="mt-1 text-xs text-green-600">

@@ -113,7 +113,8 @@
 			"add_expense": "Tambah Transaksi Pengeluaran",
 			"submit": "Simpan",
 			"update": "Perbarui",
-			"edit_transaction": "Edit Transaksi"
+			"edit_transaction": "Edit Transaksi",
+			"submitting": "Mengirim..."
 		},
 		"fields": {
 			"amount": "Jumlah",

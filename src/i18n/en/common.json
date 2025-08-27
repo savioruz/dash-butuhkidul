@@ -113,7 +113,8 @@
 			"add_expense": "Add Expense Transaction",
 			"submit": "Submit",
 			"update": "Update",
-			"edit_transaction": "Edit Transaction"
+			"edit_transaction": "Edit Transaction",
+			"submitting": "Submitting..."
 		},
 		"fields": {
 			"amount": "Amount",

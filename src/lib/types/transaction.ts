@@ -5,10 +5,10 @@ export interface Transaction {
 	amount: number;
 	date: string;
 	type: 'income' | 'expense';
-	description: string;
+	description?: string; // Optional due to omitempty
 	category: string;
 	category_name: string;
-	proof?: string;
+	proof?: string; // Optional due to omitempty
 	active: boolean;
 	created_at: string;
 	modified_at: string;
@@ -25,13 +25,3 @@ export interface GetTransactionsData {
 export type GetTransactionsResponse = Response<GetTransactionsData>;
 
 export type GetTransactionResponse = Response<Transaction>;
-
-export interface CreateTransactionRequest {
-	amount: number;
-	date: string;
-	type: 'income' | 'expense';
-	description?: string;
-	category: string;
-	proof: string;
-	active: boolean;
-}
