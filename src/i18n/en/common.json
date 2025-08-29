@@ -149,5 +149,167 @@
 			"delete_error": "Failed to delete transaction",
 			"load_error": "Failed to load transactions"
 		}
+	},
+	"village": {
+		"title": "Villages",
+		"subtitle": "Manage village information and details",
+		"loading": "Loading villages...",
+		"not_found": "No villages found",
+		"not_found_description": "There are no villages available at the moment.",
+		"refresh": "Refresh villages",
+		"edit": "Edit village",
+		"form": {
+			"edit_title": "Edit Village",
+			"edit_description": "Update the village details below.",
+			"name": "Name",
+			"name_placeholder": "Village name",
+			"address": "Address",
+			"address_placeholder": "Village address",
+			"latitude": "Latitude",
+			"latitude_placeholder": "Latitude",
+			"longitude": "Longitude",
+			"longitude_placeholder": "Longitude",
+			"cancel": "Cancel",
+			"update": "Update Village",
+			"updating": "Updating..."
+		},
+		"fields": {
+			"name": "Name",
+			"address": "Address",
+			"coordinates": "Coordinates",
+			"created_at": "Created At",
+			"actions": "Actions"
+		}
+	},
+	"village_history": {
+		"title": "Village Histories",
+		"subtitle": "View and manage village history records",
+		"loading": "Loading village histories...",
+		"not_found": "No village histories found",
+		"not_found_description": "There are no village histories available at the moment.",
+		"refresh": "Refresh histories",
+		"edit": "Edit",
+		"form": {
+			"edit_title": "Edit Village History",
+			"edit_description": "Update the village history details below.",
+			"description": "Description",
+			"description_placeholder": "Village history description",
+			"description_required": "Description is required",
+			"image": "Image",
+			"image_optional": "Image (Optional)",
+			"image_help": "Upload an image file (JPEG, PNG, GIF, WebP) - max 5MB",
+			"image_selected": "Selected:",
+			"image_error_size": "File size must be less than 5MB",
+			"image_error_type": "Please select an image file (JPEG, PNG, GIF, WebP)",
+			"cancel": "Cancel",
+			"update": "Update History",
+			"updating": "Updating..."
+		},
+		"dialog": {
+			"image_title": "Village History Image",
+			"close": "Close"
+		},
+		"messages": {
+			"update_error": "Failed to update village history"
+		}
+	},
+	"unit": {
+		"title": "Units",
+		"subtitle": "Manage village organizational units",
+		"loading": "Loading units...",
+		"not_found": "No units found",
+		"not_found_description": "There are no units available at the moment.",
+		"refresh": "Refresh units",
+		"edit": "Edit unit",
+		"delete": "Delete unit",
+		"add": "Add Unit",
+		"form": {
+			"add_title": "Add New Unit",
+			"edit_title": "Edit Unit",
+			"add_description": "Create a new organizational unit.",
+			"edit_description": "Update the unit details below.",
+			"name": "Unit Name",
+			"name_placeholder": "Enter unit name",
+			"description": "Description",
+			"description_placeholder": "Enter unit description",
+			"description_optional": "(optional)",
+			"active": "Active Unit",
+			"active_description": "Inactive units won't appear in member assignments.",
+			"cancel": "Cancel",
+			"create": "Create Unit",
+			"update": "Update Unit",
+			"creating": "Creating...",
+			"updating": "Updating..."
+		},
+		"fields": {
+			"name": "Name",
+			"description": "Description",
+			"active": "Status",
+			"created_at": "Created At",
+			"actions": "Actions"
+		},
+		"messages": {
+			"created": "Unit created successfully!",
+			"updated": "Unit updated successfully!",
+			"deleted": "Unit deleted successfully!",
+			"create_error": "Failed to create unit",
+			"update_error": "Failed to update unit",
+			"delete_error": "Failed to delete unit",
+			"load_error": "Failed to load units"
+		}
+	},
+	"unit_member": {
+		"title": "Unit Members",
+		"subtitle": "Manage members of village organizational units",
+		"loading": "Loading unit members...",
+		"not_found": "No unit members found",
+		"not_found_description": "There are no unit members available at the moment.",
+		"refresh": "Refresh members",
+		"edit": "Edit member",
+		"delete": "Delete member",
+		"add": "Add Member",
+		"form": {
+			"add_title": "Add New Unit Member",
+			"edit_title": "Edit Unit Member",
+			"add_description": "Add a new member to the organizational unit.",
+			"edit_description": "Update the member details below.",
+			"name": "Member Name",
+			"name_placeholder": "Enter member name",
+			"position": "Position",
+			"position_placeholder": "Enter member position",
+			"unit": "Unit",
+			"unit_placeholder": "Select a unit",
+			"photo": "Photo",
+			"photo_optional": "Photo (Optional)",
+			"photo_help": "Upload a photo file (JPEG, PNG, GIF, WebP) - max 5MB",
+			"photo_selected": "Selected:",
+			"photo_error_size": "File size must be less than 5MB",
+			"photo_error_type": "Please select an image file (JPEG, PNG, GIF, WebP)",
+			"active": "Active Member",
+			"active_description": "Inactive members won't appear in public listings.",
+			"cancel": "Cancel",
+			"create": "Create Member",
+			"update": "Update Member",
+			"creating": "Creating...",
+			"updating": "Updating..."
+		},
+		"fields": {
+			"name": "Name",
+			"position": "Position",
+			"unit": "Unit",
+			"photo": "Photo",
+			"active": "Status",
+			"created_at": "Created At",
+			"actions": "Actions"
+		},
+		"messages": {
+			"created": "Unit member created successfully!",
+			"updated": "Unit member updated successfully!",
+			"deleted": "Unit member deleted successfully!",
+			"create_error": "Failed to create unit member",
+			"update_error": "Failed to update unit member",
+			"delete_error": "Failed to delete unit member",
+			"load_error": "Failed to load unit members"
+		}
 	}
 }

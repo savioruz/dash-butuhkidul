@@ -149,5 +149,167 @@
 			"delete_error": "Gagal menghapus transaksi",
 			"load_error": "Gagal memuat transaksi"
 		}
+	},
+	"village": {
+		"title": "Desa",
+		"subtitle": "Kelola informasi dan detail desa",
+		"loading": "Memuat desa...",
+		"not_found": "Tidak ada desa ditemukan",
+		"not_found_description": "Saat ini tidak ada desa yang tersedia.",
+		"refresh": "Segarkan desa",
+		"edit": "Edit desa",
+		"form": {
+			"edit_title": "Edit Desa",
+			"edit_description": "Perbarui detail desa di bawah ini.",
+			"name": "Nama",
+			"name_placeholder": "Nama desa",
+			"address": "Alamat",
+			"address_placeholder": "Alamat desa",
+			"latitude": "Lintang",
+			"latitude_placeholder": "Lintang",
+			"longitude": "Bujur",
+			"longitude_placeholder": "Bujur",
+			"cancel": "Batal",
+			"update": "Perbarui Desa",
+			"updating": "Memperbarui..."
+		},
+		"fields": {
+			"name": "Nama",
+			"address": "Alamat",
+			"coordinates": "Koordinat",
+			"created_at": "Dibuat Pada",
+			"actions": "Aksi"
+		}
+	},
+	"village_history": {
+		"title": "Sejarah Desa",
+		"subtitle": "Lihat dan kelola catatan sejarah desa",
+		"loading": "Memuat sejarah desa...",
+		"not_found": "Tidak ada sejarah desa ditemukan",
+		"not_found_description": "Saat ini tidak ada sejarah desa yang tersedia.",
+		"refresh": "Segarkan sejarah",
+		"edit": "Edit",
+		"form": {
+			"edit_title": "Edit Sejarah Desa",
+			"edit_description": "Perbarui detail sejarah desa di bawah ini.",
+			"description": "Deskripsi",
+			"description_placeholder": "Deskripsi sejarah desa",
+			"description_required": "Deskripsi diperlukan",
+			"image": "Gambar",
+			"image_optional": "Gambar (Opsional)",
+			"image_help": "Unggah file gambar (JPEG, PNG, GIF, WebP) - maks 5MB",
+			"image_selected": "Dipilih:",
+			"image_error_size": "Ukuran file harus kurang dari 5MB",
+			"image_error_type": "Silakan pilih file gambar (JPEG, PNG, GIF, WebP)",
+			"cancel": "Batal",
+			"update": "Perbarui Sejarah",
+			"updating": "Memperbarui..."
+		},
+		"dialog": {
+			"image_title": "Gambar Sejarah Desa",
+			"close": "Tutup"
+		},
+		"messages": {
+			"update_error": "Gagal memperbarui sejarah desa"
+		}
+	},
+	"unit": {
+		"title": "Unit",
+		"subtitle": "Kelola unit organisasi desa",
+		"loading": "Memuat unit...",
+		"not_found": "Tidak ada unit ditemukan",
+		"not_found_description": "Saat ini tidak ada unit yang tersedia.",
+		"refresh": "Segarkan unit",
+		"edit": "Edit unit",
+		"delete": "Hapus unit",
+		"add": "Tambah Unit",
+		"form": {
+			"add_title": "Tambah Unit Baru",
+			"edit_title": "Edit Unit",
+			"add_description": "Buat unit organisasi baru.",
+			"edit_description": "Perbarui detail unit di bawah ini.",
+			"name": "Nama Unit",
+			"name_placeholder": "Masukkan nama unit",
+			"description": "Deskripsi",
+			"description_placeholder": "Masukkan deskripsi unit",
+			"description_optional": "(opsional)",
+			"active": "Unit Aktif",
+			"active_description": "Unit tidak aktif tidak akan muncul dalam penugasan anggota.",
+			"cancel": "Batal",
+			"create": "Buat Unit",
+			"update": "Perbarui Unit",
+			"creating": "Membuat...",
+			"updating": "Memperbarui..."
+		},
+		"fields": {
+			"name": "Nama",
+			"description": "Deskripsi",
+			"active": "Status",
+			"created_at": "Dibuat Pada",
+			"actions": "Aksi"
+		},
+		"messages": {
+			"created": "Unit berhasil dibuat!",
+			"updated": "Unit berhasil diperbarui!",
+			"deleted": "Unit berhasil dihapus!",
+			"create_error": "Gagal membuat unit",
+			"update_error": "Gagal memperbarui unit",
+			"delete_error": "Gagal menghapus unit",
+			"load_error": "Gagal memuat unit"
+		}
+	},
+	"unit_member": {
+		"title": "Anggota Unit",
+		"subtitle": "Kelola anggota unit organisasi desa",
+		"loading": "Memuat anggota unit...",
+		"not_found": "Tidak ada anggota unit ditemukan",
+		"not_found_description": "Saat ini tidak ada anggota unit yang tersedia.",
+		"refresh": "Segarkan anggota",
+		"edit": "Edit anggota",
+		"delete": "Hapus anggota",
+		"add": "Tambah Anggota",
+		"form": {
+			"add_title": "Tambah Anggota Unit Baru",
+			"edit_title": "Edit Anggota Unit",
+			"add_description": "Tambahkan anggota baru ke unit organisasi.",
+			"edit_description": "Perbarui detail anggota di bawah ini.",
+			"name": "Nama Anggota",
+			"name_placeholder": "Masukkan nama anggota",
+			"position": "Posisi",
+			"position_placeholder": "Masukkan posisi anggota",
+			"unit": "Unit",
+			"unit_placeholder": "Pilih unit",
+			"photo": "Foto",
+			"photo_optional": "Foto (Opsional)",
+			"photo_help": "Unggah file foto (JPEG, PNG, GIF, WebP) - maks 5MB",
+			"photo_selected": "Dipilih:",
+			"photo_error_size": "Ukuran file harus kurang dari 5MB",
+			"photo_error_type": "Silakan pilih file gambar (JPEG, PNG, GIF, WebP)",
+			"active": "Anggota Aktif",
+			"active_description": "Anggota tidak aktif tidak akan muncul dalam daftar publik.",
+			"cancel": "Batal",
+			"create": "Buat Anggota",
+			"update": "Perbarui Anggota",
+			"creating": "Membuat...",
+			"updating": "Memperbarui..."
+		},
+		"fields": {
+			"name": "Nama",
+			"position": "Posisi",
+			"unit": "Unit",
+			"photo": "Foto",
+			"active": "Status",
+			"created_at": "Dibuat Pada",
+			"actions": "Aksi"
+		},
+		"messages": {
+			"created": "Anggota unit berhasil dibuat!",
+			"updated": "Anggota unit berhasil diperbarui!",
+			"deleted": "Anggota unit berhasil dihapus!",
+			"create_error": "Gagal membuat anggota unit",
+			"update_error": "Gagal memperbarui anggota unit",
+			"delete_error": "Gagal menghapus anggota unit",
+			"load_error": "Gagal memuat anggota unit"
+		}
 	}
 }

@@ -10,6 +10,13 @@
 			"categories": "Categories",
 			"income_transactions": "Income Transactions",
 			"expense_transactions": "Expense Transactions"
+		},
+		"village": {
+			"title": "Village",
+			"profiles": "Village Profiles",
+			"histories": "Village Histories",
+			"units": "Units",
+			"unit_members": "Unit Members"
 		}
 	},
 	"finance": "Finance Homepage"

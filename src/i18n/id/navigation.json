@@ -10,6 +10,13 @@
 			"categories": "Kategori",
 			"income_transactions": "Transaksi Pemasukan",
 			"expense_transactions": "Transaksi Pengeluaran"
+		},
+		"village": {
+			"title": "Desa",
+			"profiles": "Profil Desa",
+			"histories": "Sejarah Desa",
+			"units": "Unit",
+			"unit_members": "Anggota Unit"
 		}
 	},
 	"finance": "Keuangan Homepage"
