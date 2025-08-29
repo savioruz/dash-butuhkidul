@@ -180,7 +180,6 @@
 						id="edit-description"
 						bind:value={editForm.description}
 						placeholder={$t('common.unit.form.description_placeholder')}
-						rows="3"
 					/>
 				</div>
 			</div>
