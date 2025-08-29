@@ -30,18 +30,8 @@
 		try {
 			const response = await authApi.login({ email, password });
 
-			console.log('Login response:', response); // Debug log
-
 			if (browser) {
-				// Store tokens in localStorage using auth utility
 				setTokens(response.access_token, response.refresh_token);
-
-				console.log('Tokens stored in localStorage:', {
-					accessToken: response.access_token ? 'stored' : 'missing',
-					refreshToken: response.refresh_token ? 'stored' : 'missing'
-				});
-
-				// Redirect to dashboard
 				await goto('/dashboard');
 			} else {
 				await goto('/dashboard');
