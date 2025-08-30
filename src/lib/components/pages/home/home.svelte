@@ -8,6 +8,8 @@
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { setTokens } from '$lib/auth.js';
+	import { onMount } from 'svelte';
+	import { isTokenExpired } from '@/utils/jwt';
 
 	let email = $state('');
 	let password = $state('');
@@ -42,6 +44,13 @@
 			isLoading = false;
 		}
 	}
+
+	onMount(() => {
+		const token = localStorage.getItem('accessToken') || '';
+		if (token != '' && !isTokenExpired(token)) {
+			goto('/dashboard');
+		}
+	});
 </script>
 
 <Card.Root class="mx-auto w-full max-w-sm">
