@@ -7,7 +7,7 @@
 	import { authApi } from '$lib/api/auth.js';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import { setTokens } from '$lib/auth.js';
+	import { setTokens } from '$lib/utils/jwt.js';
 	import { onMount } from 'svelte';
 	import { isTokenExpired } from '@/utils/jwt';
 

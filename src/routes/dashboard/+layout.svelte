@@ -6,12 +6,11 @@
 	import ThemeToggle from '@/components/ui/theme-toggle/theme-toggle.svelte';
 	import { LogOut } from 'lucide-svelte';
 	import LanguageSwitcher from '@/components/ui/language-switcher';
-	import { requireAuth, logout } from '$lib/auth';
+	import { requireAuth, logout } from '$lib/utils/jwt';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
 
-	// Check authentication on mount
 	onMount(() => {
 		requireAuth();
 	});

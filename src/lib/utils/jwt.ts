@@ -1,3 +1,5 @@
+import { browser } from '$app/environment';
+
 /**
  * Decode JWT token payload without verification
  * @param token JWT token string
@@ -87,5 +89,117 @@ export function getTimeUntilExpiration(token: string): string | null {
 		return `${minutes}m ${seconds}s`;
 	} else {
 		return `${seconds}s`;
+	}
+}
+
+// ===== AUTH FUNCTIONS =====
+
+/**
+ * Get access token from localStorage
+ * @returns Access token or null if not found
+ */
+export function getAccessToken(): string | null {
+	if (!browser || typeof window === 'undefined' || typeof localStorage === 'undefined') {
+		return null;
+	}
+	try {
+		return localStorage.getItem('accessToken');
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Get refresh token from localStorage
+ * @returns Refresh token or null if not found
+ */
+export function getRefreshToken(): string | null {
+	if (!browser || typeof window === 'undefined' || typeof localStorage === 'undefined') {
+		return null;
+	}
+	try {
+		return localStorage.getItem('refreshToken');
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Set tokens in localStorage
+ * @param accessToken Access token to store
+ * @param refreshToken Optional refresh token to store
+ */
+export function setTokens(accessToken: string, refreshToken?: string): void {
+	if (!browser || typeof window === 'undefined' || typeof localStorage === 'undefined') {
+		return;
+	}
+
+	try {
+		localStorage.setItem('accessToken', accessToken);
+		if (refreshToken) {
+			localStorage.setItem('refreshToken', refreshToken);
+		}
+	} catch (error) {
+		console.error('Failed to set tokens:', error);
+	}
+}
+
+/**
+ * Clear all tokens from localStorage
+ */
+export function clearTokens(): void {
+	if (!browser || typeof window === 'undefined' || typeof localStorage === 'undefined') {
+		return;
+	}
+
+	try {
+		localStorage.removeItem('accessToken');
+		localStorage.removeItem('refreshToken');
+	} catch (error) {
+		console.error('Failed to clear tokens:', error);
+	}
+}
+
+/**
+ * Check if user is authenticated (has valid access token)
+ * @returns true if authenticated, false otherwise
+ */
+export function isAuthenticated(): boolean {
+	try {
+		const token = getAccessToken();
+		if (!token) return false;
+		return !isTokenExpired(token);
+	} catch (error) {
+		console.error('Error checking authentication:', error);
+		return false;
+	}
+}
+
+/**
+ * Require authentication - redirect to home if not authenticated
+ */
+export function requireAuth(): void {
+	if (!browser) return;
+
+	// Check if localStorage is available (prevents errors during SSR)
+	if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+		return;
+	}
+
+	if (!isAuthenticated()) {
+		clearTokens();
+		// Use location.href for more reliable redirect during hard refresh
+		window.location.href = '/';
+	}
+}
+
+/**
+ * Logout user - clear tokens and redirect to home
+ */
+export function logout(): void {
+	clearTokens();
+	// Use replace to avoid adding to browser history
+	if (typeof window !== 'undefined') {
+		window.location.replace('/');
 	}
 }
