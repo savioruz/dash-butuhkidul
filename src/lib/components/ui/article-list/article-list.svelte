@@ -33,7 +33,8 @@
 	let editForm = $state({
 		title: '',
 		content: '',
-		active: true
+		active: true,
+		published_at: ''
 	});
 	let editFormActiveStatus = $state('true');
 	let selectedFile: File | null = $state(null);
@@ -44,7 +45,8 @@
 		editForm = {
 			title: article.title,
 			content: article.content,
-			active: article.active
+			active: article.active,
+			published_at: formatDateForInput(article.published_at)
 		};
 		editFormActiveStatus = article.active.toString();
 		selectedFile = null;
@@ -58,6 +60,18 @@
 
 	function formatDate(dateString: string) {
 		return new Date(dateString).toLocaleDateString('id-ID');
+	}
+
+	function formatDateForInput(dateString?: string): string {
+		if (!dateString) return '';
+
+		// Convert from API format (2006-01-02 15:04:05) to datetime-local format (2006-01-02T15:04)
+		if (dateString.includes(' ')) {
+			return dateString.replace(' ', 'T').substring(0, 16);
+		}
+
+		// If already in ISO format, just return the first 16 chars
+		return dateString.substring(0, 16);
 	}
 
 	function getStatusColor(active: boolean) {
@@ -86,7 +100,8 @@
 			const updateData = {
 				title: editForm.title,
 				content: editForm.content,
-				active: editFormActiveStatus
+				active: editFormActiveStatus,
+				published_at: editForm.published_at || undefined
 			};
 			await onUpdate(editingArticle.id, updateData, selectedFile);
 			showEditDialog = false;
@@ -307,6 +322,22 @@
 							{$t('common.article.status.active')}
 						</label>
 					</div>
+				</div>
+
+				<div>
+					<Label for="edit-published"
+						>{$t('common.article.form.published_date')}
+						{$t('common.article.form.published_date_optional')}</Label
+					>
+					<Input
+						id="edit-published"
+						type="datetime-local"
+						bind:value={editForm.published_at}
+						placeholder="YYYY-MM-DD HH:MM:SS"
+					/>
+					<p class="mt-1 text-xs text-muted-foreground">
+						{$t('common.article.form.published_date_description')}
+					</p>
 				</div>
 
 				<div>

@@ -78,6 +78,19 @@ export const articleApi = {
 			formData.append('file', file);
 		}
 
+		if (data.published_at) {
+			// Convert datetime-local format to API expected format: 2006-01-02 15:04:05
+			let formattedDate: string;
+			if (data.published_at.includes('T')) {
+				// datetime-local format: 2023-12-31T23:59
+				formattedDate = data.published_at.replace('T', ' ') + ':00';
+			} else {
+				// Assume it's already in the correct format
+				formattedDate = data.published_at;
+			}
+			formData.append('published_at', formattedDate);
+		}
+
 		return apiClient.request(`/v1/articles/${id}`, {
 			method: 'PATCH',
 			body: formData
