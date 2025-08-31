@@ -311,5 +311,66 @@
 			"delete_error": "Gagal menghapus anggota unit",
 			"load_error": "Gagal memuat anggota unit"
 		}
+	},
+	"article": {
+		"title": "Artikel",
+		"subtitle": "Kelola artikel dan posting blog Anda",
+		"add": "Tambah Artikel",
+		"edit": "Edit Artikel",
+		"delete": "Hapus Artikel",
+		"refresh": "Perbarui artikel",
+		"view_cover": "Lihat gambar sampul",
+		"no_articles": "Tidak ada artikel",
+		"no_articles_description": "Mulai dengan membuat artikel baru.",
+		"no_cover": "Tidak ada gambar sampul tersedia",
+		"confirm_delete": "Apakah Anda yakin ingin menghapus artikel ini? Tindakan ini tidak dapat dibatalkan.",
+		"updateButton": "Perbarui",
+		"cancel": "Batal",
+		"viewCover": "Lihat Sampul",
+		"status": {
+			"active": "Aktif",
+			"inactive": "Tidak Aktif"
+		},
+		"editTitle": "Perbarui artikel",
+		"form": {
+			"add_title": "Tambah Artikel Baru",
+			"edit_title": "Edit Artikel",
+			"add_description": "Buat artikel baru untuk blog atau website Anda",
+			"edit_description": "Perbarui informasi artikel di bawah ini.",
+			"title": "Judul",
+			"title_placeholder": "Masukkan judul artikel",
+			"title_required": "Judul diperlukan",
+			"content": "Konten",
+			"content_placeholder": "Tulis konten artikel Anda di sini... Mendukung Markdown!",
+			"content_required": "Konten diperlukan",
+			"status": "Status",
+			"cover_image": "Gambar Sampul",
+			"cover_selected": "Dipilih:",
+			"published_date": "Tanggal Publikasi",
+			"published_date_optional": "(opsional)",
+			"published_date_description": "Biarkan kosong untuk artikel draft",
+			"submit_create": "Buat Artikel",
+			"submit_update": "Perbarui Artikel",
+			"cancel": "Batal",
+			"creating": "Membuat...",
+			"updating": "Memperbarui..."
+		},
+		"table": {
+			"title": "Judul",
+			"author": "Penulis",
+			"content": "Konten",
+			"status": "Status",
+			"created": "Dibuat",
+			"actions": "Aksi"
+		},
+		"messages": {
+			"create_success": "Artikel berhasil dibuat",
+			"update_success": "Artikel berhasil diperbarui",
+			"delete_success": "Artikel berhasil dihapus",
+			"create_error": "Gagal membuat artikel",
+			"update_error": "Gagal memperbarui artikel",
+			"delete_error": "Gagal menghapus artikel",
+			"load_error": "Gagal memuat artikel"
+		}
 	}
 }

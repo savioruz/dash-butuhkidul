@@ -240,7 +240,6 @@
 			/>
 		</div>
 	{:else}
-		<!-- Transactions List -->
 		<TransactionList
 			{transactions}
 			{categories}

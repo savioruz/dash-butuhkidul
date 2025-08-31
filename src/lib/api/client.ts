@@ -13,12 +13,20 @@ export class ApiClient {
 		const url = `${this.baseUrl}${endpoint}`;
 
 		const config: RequestInit = {
-			headers: {
-				'Content-Type': 'application/json',
-				...options.headers
-			},
 			...options
 		};
+
+		// Don't set Content-Type for FormData - let browser set it with boundary
+		if (!(options.body instanceof FormData)) {
+			config.headers = {
+				'Content-Type': 'application/json',
+				...options.headers
+			};
+		} else {
+			config.headers = {
+				...options.headers
+			};
+		}
 
 		// Add auth token if available
 		if (browser) {

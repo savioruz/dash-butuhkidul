@@ -11,6 +11,10 @@
 			"income_transactions": "Transaksi Pemasukan",
 			"expense_transactions": "Transaksi Pengeluaran"
 		},
+		"articles": {
+			"title": "Artikel",
+			"articles": "Artikel"
+		},
 		"village": {
 			"title": "Desa",
 			"profiles": "Profil Desa",

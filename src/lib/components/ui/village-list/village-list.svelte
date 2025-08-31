@@ -60,7 +60,12 @@
 
 {#if isLoading}
 	<div class="flex items-center justify-center py-8 text-muted-foreground">
-		{$t('common.village.loading')}
+		<div class="flex items-center gap-2">
+			<div
+				class="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600"
+			></div>
+			{$t('common.loading')}
+		</div>
 	</div>
 {:else if villages.length === 0}
 	<div class="flex flex-col items-center justify-center py-12 text-muted-foreground">

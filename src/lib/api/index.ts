@@ -11,6 +11,9 @@ export {
 	type RefreshTokenResponse
 } from './auth';
 
+// Articles API
+export { articleApi, type CreateArticleRequest, type UpdateArticleRequest } from './articles';
+
 // Categories API
 export {
 	categoriesApi,
@@ -41,6 +44,7 @@ export { villageApi, villageHistoryApi } from './village';
 
 // Legacy compatibility - keeping the old structure for backward compatibility
 import { authApi } from './auth';
+import { articleApi } from './articles';
 import { categoriesApi } from './categories';
 import { transactionsApi } from './transactions';
 import { usersApi } from './users';
@@ -48,6 +52,7 @@ import { villageApi, villageHistoryApi } from './village';
 
 export const api = {
 	auth: authApi,
+	articles: articleApi,
 	categories: categoriesApi,
 	transactions: transactionsApi,
 	users: usersApi,

@@ -82,7 +82,7 @@
 	</div>
 	{#if errorMessage}
 		<Card.Root class="border-destructive bg-destructive/5">
-			<Card.Content class="flex items-center justify-between pt-6">
+			<Card.Content class="flex items-center justify-between">
 				<div class="flex items-center gap-3">
 					<div class="rounded-full bg-destructive/20 p-2">
 						<svg
@@ -120,7 +120,7 @@
 
 	{#if successMessage}
 		<Card.Root class="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20">
-			<Card.Content class="flex items-center justify-between pt-6">
+			<Card.Content class="flex items-center justify-between">
 				<div class="flex items-center gap-3">
 					<div class="rounded-full bg-green-100 p-2 dark:bg-green-900/50">
 						<svg

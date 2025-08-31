@@ -11,6 +11,10 @@
 			"income_transactions": "Income Transactions",
 			"expense_transactions": "Expense Transactions"
 		},
+		"articles": {
+			"title": "Articles",
+			"articles": "Articles"
+		},
 		"village": {
 			"title": "Village",
 			"profiles": "Village Profiles",

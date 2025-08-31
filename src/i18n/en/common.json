@@ -311,5 +311,66 @@
 			"delete_error": "Failed to delete unit member",
 			"load_error": "Failed to load unit members"
 		}
+	},
+	"article": {
+		"title": "Articles",
+		"subtitle": "Manage your articles and blog posts",
+		"add": "Add Article",
+		"edit": "Edit Article",
+		"delete": "Delete Article",
+		"refresh": "Refresh articles",
+		"view_cover": "View cover image",
+		"no_articles": "No articles",
+		"no_articles_description": "Get started by creating a new article.",
+		"no_cover": "No cover image available",
+		"confirm_delete": "Are you sure you want to delete this article? This action cannot be undone.",
+		"updateButton": "Update",
+		"cancel": "Cancel",
+		"viewCover": "View Cover",
+		"status": {
+			"active": "Active",
+			"inactive": "Inactive"
+		},
+		"editTitle": "Edit Article",
+		"form": {
+			"add_title": "Add New Article",
+			"edit_title": "Edit Article",
+			"add_description": "Create a new article for your blog or website",
+			"edit_description": "Update the article information below.",
+			"title": "Title",
+			"title_placeholder": "Enter article title",
+			"title_required": "Title is required",
+			"content": "Content",
+			"content_placeholder": "Write your article content here... Supports Markdown!",
+			"content_required": "Content is required",
+			"status": "Status",
+			"cover_image": "Cover Image",
+			"cover_selected": "Selected:",
+			"published_date": "Published Date",
+			"published_date_optional": "(optional)",
+			"published_date_description": "Leave empty for draft articles",
+			"submit_create": "Create Article",
+			"submit_update": "Update Article",
+			"cancel": "Cancel",
+			"creating": "Creating...",
+			"updating": "Updating..."
+		},
+		"table": {
+			"title": "Title",
+			"author": "Author",
+			"content": "Content",
+			"status": "Status",
+			"created": "Created",
+			"actions": "Actions"
+		},
+		"messages": {
+			"create_success": "Article created successfully",
+			"update_success": "Article updated successfully",
+			"delete_success": "Article deleted successfully",
+			"create_error": "Failed to create article",
+			"update_error": "Failed to update article",
+			"delete_error": "Failed to delete article",
+			"load_error": "Failed to load articles"
+		}
 	}
 }

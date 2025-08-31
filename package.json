@@ -36,6 +36,7 @@
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"prettier-plugin-tailwindcss": "^0.6.11",
+		"sass": "^1.91.0",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"tailwind-merge": "^3.3.1",
@@ -47,8 +48,14 @@
 		"vite": "^7.0.4"
 	},
 	"dependencies": {
+		"@cartamd/plugin-anchor": "^2.2.0",
+		"@cartamd/plugin-code": "^4.2.0",
+		"@cartamd/plugin-slash": "^4.2.0",
 		"@sveltejs/adapter-cloudflare": "^7.2.2",
+		"carta-md": "^4.11.1",
+		"dompurify": "^3.2.6",
 		"lucide-svelte": "^0.537.0",
+		"marked": "^16.2.1",
 		"mode-watcher": "^1.1.0",
 		"sveltekit-i18n": "^2.4.2"
 	},

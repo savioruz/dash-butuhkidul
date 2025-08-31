@@ -1,0 +1,386 @@
+// Carta markdown editor styling for our design system
+.carta-wrapper {
+	// Core styles using CSS variables for theme integration
+	--background: var(--background);
+	--background-light: var(--muted);
+	--border: var(--border);
+	--accent: var(--primary);
+	--text: var(--foreground);
+	--text-muted: var(--muted-foreground);
+
+	.carta-editor {
+		background-color: var(--background);
+		border: 1px solid var(--border);
+		border-radius: 0.5rem;
+
+		&:focus-within {
+			outline: 2px solid var(--accent);
+		}
+
+		.carta-wrapper {
+			padding: 1rem;
+			flex-grow: 1;
+		}
+
+		.carta-input,
+		.carta-renderer {
+			min-height: 300px;
+			max-height: none;
+			overflow: auto;
+		}
+
+		.carta-font-code {
+			font-family:
+				ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+			caret-color: var(--foreground) !important;
+			font-size: 0.875rem;
+		}
+
+		.carta-toolbar {
+			height: 2.5rem;
+			background-color: var(--background-light);
+			border-top-left-radius: 0.5rem;
+			border-top-right-radius: 0.5rem;
+
+			.carta-icon {
+				width: 2rem;
+				height: 2rem;
+
+				&:hover {
+					color: var(--text);
+					background-color: var(--border);
+				}
+			}
+		}
+
+		.carta-toolbar-left button,
+		.carta-toolbar-right,
+		.carta-filler {
+			border-bottom: 1px solid var(--border);
+		}
+
+		.carta-toolbar-left {
+			& > *:first-child {
+				border-top-left-radius: 0.5rem;
+			}
+
+			& > * {
+				padding-left: 1rem;
+				padding-right: 1rem;
+				font-size: 0.875rem;
+				font-weight: 500;
+			}
+
+			button {
+				height: 100%;
+				transition: all 0.2s ease;
+			}
+
+			.carta-active {
+				background-color: var(--background);
+				color: var(--text);
+				font-weight: 700; // Bold for active tab
+				border-right: 1px solid var(--border);
+				border-bottom: 1px solid var(--background);
+
+				&:not(:first-child) {
+					border-left: 1px solid var(--border);
+				}
+			}
+		}
+
+		.carta-toolbar-right {
+			padding-right: 12px;
+		}
+
+		.carta-icons-menu {
+			padding: 8px;
+			border: 1px solid var(--border);
+			border-radius: 6px;
+			min-width: 180px;
+			background: var(--background);
+
+			.carta-icon-full {
+				padding-left: 6px;
+				padding-right: 6px;
+				margin-top: 2px;
+
+				&:first-child {
+					margin-top: 0;
+				}
+
+				&:hover {
+					color: var(--text);
+					background-color: var(--border);
+				}
+
+				span {
+					margin-left: 6px;
+					color: var(--text);
+					font-size: 0.85rem;
+				}
+			}
+		}
+	}
+
+	.carta-tabs {
+		display: flex;
+		gap: 1rem; // Space between Write and Preview tabs
+		background: var(--background-light);
+		border-bottom: 1px solid var(--border);
+		padding: 0;
+		margin: 0;
+	}
+
+	.carta-tab {
+		background: transparent;
+		border: none;
+		border-bottom: 3px solid transparent;
+		padding: 10px 20px;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: all 0.2s ease;
+		border-radius: 0.375rem 0.375rem 0 0;
+		margin: 4px 4px 0 4px;
+
+		&:hover {
+			color: var(--text);
+			background: hsl(var(--muted) / 0.5);
+		}
+
+		&[data-tab-selected='true'] {
+			color: var(--text);
+			border-bottom-color: var(--accent);
+			background: var(--background);
+			font-weight: 700; // Bold active tab
+			box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+		}
+	}
+
+	// Input area with blinking cursor
+	.carta-input {
+		font-family:
+			ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace !important;
+		font-size: 0.875rem;
+		line-height: 1.5;
+		padding: 16px;
+		background: var(--background);
+		color: var(--text);
+		border: none;
+		outline: none;
+		resize: none;
+		min-height: 300px;
+		width: 100%;
+		caret-color: var(--foreground) !important;
+
+		&:focus {
+			caret-color: var(--primary) !important;
+			outline: none;
+		}
+
+		&::placeholder {
+			color: var(--text-muted);
+		}
+	}
+
+	// Preview area
+	.carta-renderer {
+		font-size: 0.875rem;
+		line-height: 1.6;
+		padding: 16px;
+		background: var(--background);
+		color: var(--text);
+		min-height: 300px;
+		overflow-y: auto;
+
+		// Markdown content styling
+		h1 {
+			font-size: 2rem;
+			font-weight: 600;
+			margin: 0 0 1rem 0;
+			line-height: 1.25;
+			border-bottom: 1px solid var(--border);
+			padding-bottom: 0.5rem;
+			color: var(--text);
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin: 1.5rem 0 0.75rem 0;
+			line-height: 1.25;
+			border-bottom: 1px solid var(--border);
+			padding-bottom: 0.25rem;
+			color: var(--text);
+		}
+
+		h3 {
+			font-size: 1.25rem;
+			font-weight: 600;
+			margin: 1.25rem 0 0.5rem 0;
+			line-height: 1.25;
+			color: var(--text);
+		}
+
+		h4,
+		h5,
+		h6 {
+			font-weight: 600;
+			margin: 1rem 0 0.5rem 0;
+			line-height: 1.25;
+			color: var(--text);
+		}
+
+		p {
+			margin: 0 0 1rem 0;
+			color: var(--text);
+		}
+
+		code {
+			background: var(--background-light);
+			padding: 2px 4px;
+			border-radius: 0.25rem;
+			font-size: 0.8125rem;
+			font-family:
+				ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+			color: var(--text);
+		}
+
+		pre {
+			background: var(--background-light);
+			padding: 1rem;
+			border-radius: 0.375rem;
+			overflow-x: auto;
+			margin: 1rem 0;
+			border: 1px solid var(--border);
+			font-size: 0.8125rem;
+
+			code {
+				background: transparent;
+				padding: 0;
+				border-radius: 0;
+				font-size: inherit;
+			}
+		}
+
+		a {
+			color: var(--accent);
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+
+		blockquote {
+			border-left: 4px solid var(--accent);
+			padding: 0.75rem 1rem;
+			margin: 1rem 0;
+			background: hsl(var(--muted) / 0.3);
+			color: var(--text-muted);
+			font-style: italic;
+			border-radius: 0 0.25rem 0.25rem 0;
+
+			p {
+				margin: 0;
+			}
+		}
+
+		ul,
+		ol {
+			margin: 1rem 0 !important;
+			padding-left: 1.5rem !important;
+			color: var(--text) !important;
+			list-style-position: outside !important;
+		}
+
+		ul {
+			list-style-type: disc !important;
+
+			ul {
+				list-style-type: circle !important;
+				margin: 0.25rem 0 !important;
+
+				ul {
+					list-style-type: square !important;
+				}
+			}
+		}
+
+		ol {
+			list-style-type: decimal !important;
+
+			ol {
+				list-style-type: lower-alpha !important;
+				margin: 0.25rem 0 !important;
+
+				ol {
+					list-style-type: lower-roman !important;
+				}
+			}
+		}
+
+		li {
+			margin: 0.25rem 0 !important;
+			line-height: 1.6 !important;
+			display: list-item !important;
+			list-style-position: outside !important;
+
+			p {
+				margin: 0.25rem 0;
+			}
+
+			&::marker {
+				color: var(--text) !important;
+			}
+		}
+
+		hr {
+			border: none;
+			border-top: 1px solid var(--border);
+			margin: 1.5rem 0;
+		}
+	}
+}
+
+// Global override for Carta list rendering
+:global(.carta-renderer ul),
+:global(.carta-renderer ol) {
+	margin: 1rem 0 !important;
+	padding-left: 1.5rem !important;
+	color: var(--text) !important;
+	list-style-position: outside !important;
+}
+
+:global(.carta-renderer ul) {
+	list-style-type: disc !important;
+}
+
+:global(.carta-renderer ol) {
+	list-style-type: decimal !important;
+}
+
+:global(.carta-renderer li) {
+	margin: 0.25rem 0 !important;
+	line-height: 1.6 !important;
+	display: list-item !important;
+	list-style-position: outside !important;
+}
+
+:global(.carta-renderer ul li::marker),
+:global(.carta-renderer ol li::marker) {
+	color: var(--text) !important;
+}
+
+// Global cursor fix for theme compatibility
+:global(.carta-input),
+:global(.carta-font-code) {
+	caret-color: var(--foreground) !important;
+}
+
+:global(.carta-input:focus),
+:global(.carta-font-code:focus) {
+	caret-color: var(--primary) !important;
+}
