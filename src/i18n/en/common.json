@@ -193,7 +193,7 @@
 			"edit_title": "Edit Village History",
 			"edit_description": "Update the village history details below.",
 			"description": "Description",
-			"description_placeholder": "Village history description",
+			"description_placeholder": "Write village history description here... Supports Markdown!",
 			"description_required": "Description is required",
 			"image": "Image",
 			"image_optional": "Image (Optional)",

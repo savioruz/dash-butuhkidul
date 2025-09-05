@@ -193,7 +193,7 @@
 			"edit_title": "Edit Sejarah Desa",
 			"edit_description": "Perbarui detail sejarah desa di bawah ini.",
 			"description": "Deskripsi",
-			"description_placeholder": "Deskripsi sejarah desa",
+			"description_placeholder": "Tulis deskripsi sejarah desa di sini... Mendukung Markdown!",
 			"description_required": "Deskripsi diperlukan",
 			"image": "Gambar",
 			"image_optional": "Gambar (Opsional)",

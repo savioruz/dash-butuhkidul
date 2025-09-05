@@ -6,7 +6,7 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
-	import { Textarea } from '$lib/components/ui/textarea/index.js';
+	import { MarkdownEditor } from '$lib/components/ui/markdown-editor/index.js';
 
 	interface Props {
 		villageHistories?: VillageHistory[];
@@ -44,6 +44,22 @@
 
 	function formatDate(dateString: string) {
 		return new Date(dateString).toLocaleDateString('id-ID');
+	}
+
+	function stripMarkdown(text: string): string {
+		// Simple markdown stripping for display purposes
+		return text
+			.replace(/[#*_`~]/g, '') // Remove markdown symbols
+			.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // Convert links to text
+			.replace(/!\[([^\]]*)\]\([^)]+\)/g, '$1') // Convert images to alt text
+			.replace(/\n+/g, ' ') // Replace newlines with spaces
+			.trim();
+	}
+
+	function truncateText(text: string, maxLength: number = 100): string {
+		const plainText = stripMarkdown(text);
+		if (plainText.length <= maxLength) return plainText;
+		return plainText.substring(0, maxLength) + '...';
 	}
 
 	function handleFileChange(event: Event) {
@@ -99,7 +115,7 @@
 
 <div class="space-y-4">
 	<div class="flex items-center justify-between">
-		<h2 class="text-lg font-semibold">Village Histories</h2>
+		<h2 class="text-lg font-semibold">{$t('common.village_history.title')}</h2>
 	</div>
 
 	{#if isLoading}
@@ -142,7 +158,9 @@
 					{/if}
 
 					<div class="p-4">
-						<p class="mb-3 line-clamp-3 text-sm text-gray-900">{history.description}</p>
+						<p class="mb-3 line-clamp-3 text-sm text-gray-900">
+							{truncateText(history.description, 150)}
+						</p>
 
 						<div class="mb-3 flex items-center justify-between text-xs text-gray-500">
 							<div class="flex items-center">
@@ -167,7 +185,7 @@
 <!-- Edit Dialog -->
 {#if showEditDialog && editingVillageHistory}
 	<Dialog.Root bind:open={showEditDialog}>
-		<Dialog.Content class="max-w-md">
+		<Dialog.Content class="max-h-[85vh] max-w-3xl overflow-y-auto md:max-w-4xl lg:max-w-5xl">
 			<Dialog.Header>
 				<Dialog.Title>{$t('common.village_history.form.edit_title')}</Dialog.Title>
 				<Dialog.Description>{$t('common.village_history.form.edit_description')}</Dialog.Description
@@ -183,12 +201,12 @@
 				{/if}
 
 				<div>
-					<Label for="edit-description">{$t('common.village_history.form.description')} *</Label>
-					<Textarea
-						id="edit-description"
+					<MarkdownEditor
 						bind:value={editForm.description}
 						placeholder={$t('common.village_history.form.description_placeholder')}
-						required
+						label={$t('common.village_history.form.description')}
+						rows={6}
+						required={true}
 					/>
 				</div>
 
