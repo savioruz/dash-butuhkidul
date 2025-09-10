@@ -5,6 +5,9 @@
 	"contact": "Contact",
 	"sidebar": {
 		"platform": "Platform",
+		"dashboard": {
+			"title": "Dashboard"
+		},
 		"finance": {
 			"title": "Finance",
 			"categories": "Categories",

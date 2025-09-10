@@ -1,7 +1,18 @@
-import { CircleDollarSign, MapPin, Newspaper } from 'lucide-svelte';
+import { CircleDollarSign, Home, MapPin, Newspaper } from 'lucide-svelte';
 
 export const sidebarItems = {
 	navMain: [
+		{
+			title: 'navigation.sidebar.dashboard.title',
+			icon: Home,
+			isActive: true,
+			items: [
+				{
+					title: 'navigation.sidebar.dashboard.title',
+					url: '/dashboard'
+				}
+			]
+		},
 		{
 			title: 'navigation.sidebar.finance.title',
 			icon: CircleDollarSign,

@@ -5,6 +5,9 @@
 	"contact": "Kontak",
 	"sidebar": {
 		"platform": "Platform",
+		"dashboard": {
+			"title": "Dashboard"
+		},
 		"finance": {
 			"title": "Keuangan",
 			"categories": "Kategori",

@@ -3,6 +3,7 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import ChevronRightIcon from '@lucide/svelte/icons/chevron-right';
 	import { t } from '$lib/i18n';
+	import { page } from '$app/state';
 
 	let {
 		items
@@ -45,10 +46,14 @@
 							<Sidebar.MenuSub>
 								{#each item.items ?? [] as subItem (subItem.title)}
 									<Sidebar.MenuSubItem>
-										<Sidebar.MenuSubButton>
+										<Sidebar.MenuSubButton
+											class={page.url.pathname === subItem.url ? 'bg-accent' : ''}
+										>
 											{#snippet child({ props })}
 												<a href={subItem.url} {...props}>
-													<span>{$t(subItem.title)}</span>
+													<span>
+														{$t(subItem.title)}
+													</span>
 												</a>
 											{/snippet}
 										</Sidebar.MenuSubButton>

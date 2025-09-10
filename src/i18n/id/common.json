@@ -18,6 +18,53 @@
 		"edit": "Edit",
 		"delete": "Hapus"
 	},
+	"dashboard": {
+		"title": "Dashboard",
+		"subtitle": "Ringkasan keuangan dan statistik penduduk Desa Butuh Kidul",
+		"error": {
+			"load_failed": "Beberapa data dashboard tidak dapat dimuat. Silakan periksa koneksi atau coba muat ulang."
+		},
+		"finance": {
+			"total_income": "Total Pendapatan",
+			"total_expense": "Total Pengeluaran",
+			"balance": "Saldo",
+			"expense_ratio": "Rasio Pengeluaran"
+		},
+		"population": {
+			"total_population": "Total Penduduk",
+			"total_households": "Total Rumah Tangga",
+			"hamlets": "Dusun",
+			"avg_household_size": "Rata-rata Anggota RT"
+		},
+		"charts": {
+			"population_by_hamlet": {
+				"title": "Penduduk per Dusun",
+				"description": "Distribusi penduduk di berbagai dusun"
+			},
+			"gender_distribution": {
+				"title": "Distribusi Jenis Kelamin",
+				"description": "Perbandingan jumlah penduduk laki-laki dan perempuan"
+			},
+			"age_distribution": {
+				"title": "Distribusi Umur",
+				"description": "Pembagian penduduk berdasarkan kelompok umur"
+			},
+			"household_distribution": {
+				"title": "Distribusi Rumah Tangga",
+				"description": "Jumlah rumah tangga per dusun"
+			},
+			"population_label": "Penduduk",
+			"households_label": "Rumah Tangga",
+			"total_label": "Total",
+			"male_label": "Laki-laki",
+			"female_label": "Perempuan",
+			"age_groups": {
+				"children": "Anak-anak",
+				"adults": "Dewasa",
+				"elderly": "Lansia"
+			}
+		}
+	},
 	"category": {
 		"title": "Kategori",
 		"subtitle": "Kelola kategori transaksi Anda",

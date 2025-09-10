@@ -18,6 +18,53 @@
 		"edit": "Edit",
 		"delete": "Delete"
 	},
+	"dashboard": {
+		"title": "Dashboard",
+		"subtitle": "Financial overview and population statistics for Butuh Kidul Village",
+		"error": {
+			"load_failed": "Some dashboard data could not be loaded. Please check your connection or try refreshing."
+		},
+		"finance": {
+			"total_income": "Total Income",
+			"total_expense": "Total Expense",
+			"balance": "Balance",
+			"expense_ratio": "Expense Ratio"
+		},
+		"population": {
+			"total_population": "Total Population",
+			"total_households": "Total Households",
+			"hamlets": "Hamlets",
+			"avg_household_size": "Avg. Household Size"
+		},
+		"charts": {
+			"population_by_hamlet": {
+				"title": "Population by Hamlet",
+				"description": "Population distribution across different hamlets"
+			},
+			"gender_distribution": {
+				"title": "Gender Distribution",
+				"description": "Male vs Female population ratio"
+			},
+			"age_distribution": {
+				"title": "Age Distribution",
+				"description": "Population breakdown by age groups"
+			},
+			"household_distribution": {
+				"title": "Household Distribution",
+				"description": "Number of households per hamlet"
+			},
+			"population_label": "Population",
+			"households_label": "Households",
+			"total_label": "Total",
+			"male_label": "Male",
+			"female_label": "Female",
+			"age_groups": {
+				"children": "Children",
+				"adults": "Adults",
+				"elderly": "Elderly"
+			}
+		}
+	},
 	"category": {
 		"title": "Categories",
 		"subtitle": "Manage your transaction categories",
