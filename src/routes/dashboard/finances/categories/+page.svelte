@@ -18,6 +18,11 @@
 	let errorMessage = $state('');
 	let successMessage = $state('');
 
+	let currentPage = $state(1);
+	let totalPages = $state(1);
+	let totalItems = $state(0);
+	let itemsPerPage = $state(10);
+
 	onMount(async () => {
 		await loadCategories();
 	});
@@ -26,8 +31,13 @@
 		try {
 			isLoading = true;
 			errorMessage = '';
-			const response = await categoriesApi.getCategories();
+			const response = await categoriesApi.getCategories({
+				page: currentPage,
+				limit: itemsPerPage
+			});
 			categories = response.data?.categories || [];
+			totalItems = response.data?.total_data || 0;
+			totalPages = response.data?.total_page || 1;
 		} catch (error) {
 			console.error('Error loading categories:', error);
 			errorMessage =
@@ -109,6 +119,11 @@
 	function dismissMessage() {
 		errorMessage = '';
 		successMessage = '';
+	}
+
+	async function handlePageChange(page: number) {
+		currentPage = page;
+		await loadCategories();
 	}
 </script>
 
@@ -203,6 +218,11 @@
 			onAdd={handleAdd}
 			onEdit={handleEdit}
 			onDelete={handleDelete}
+			{currentPage}
+			{totalPages}
+			{totalItems}
+			{itemsPerPage}
+			onPageChange={handlePageChange}
 		/>
 	{/if}
 </div>

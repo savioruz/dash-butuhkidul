@@ -60,6 +60,10 @@ export interface GetUnitMembersResponse {
 	success: boolean;
 	data: {
 		unit_members: UnitMember[];
+		total_data?: number;
+		total_page?: number;
+		current_page?: number;
+		limit?: number;
 	};
 	message: string;
 }

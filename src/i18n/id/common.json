@@ -310,6 +310,17 @@
 			"update_error": "Gagal memperbarui anggota unit",
 			"delete_error": "Gagal menghapus anggota unit",
 			"load_error": "Gagal memuat anggota unit"
+		},
+		"pagination": {
+			"showing": "Menampilkan",
+			"to": "hingga",
+			"of": "dari",
+			"entries": "entri",
+			"show": "Tampilkan:",
+			"first": "Pertama",
+			"previous": "Sebelumnya",
+			"next": "Selanjutnya",
+			"last": "Terakhir"
 		}
 	},
 	"article": {

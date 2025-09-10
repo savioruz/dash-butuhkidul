@@ -114,10 +114,7 @@
 </script>
 
 <div class="space-y-4">
-	<div class="flex items-center justify-between">
-		<h2 class="text-lg font-semibold">{$t('common.village_history.title')}</h2>
-	</div>
-
+	4
 	{#if isLoading}
 		<div class="flex items-center justify-center py-8 text-muted-foreground">
 			<div class="flex items-center gap-2">

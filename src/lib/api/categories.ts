@@ -13,9 +13,23 @@ export interface UpdateCategoryRequest {
 	active?: boolean;
 }
 
+export interface GetCategoriesParams {
+	page?: number;
+	limit?: number;
+}
+
 export const categoriesApi = {
-	async getCategories(): Promise<GetCategoriesResponse> {
-		return apiClient.request('/v1/categories');
+	async getCategories(params?: GetCategoriesParams): Promise<GetCategoriesResponse> {
+		const searchParams = new URLSearchParams();
+		if (params?.page) {
+			searchParams.append('page', params.page.toString());
+		}
+		if (params?.limit) {
+			searchParams.append('limit', params.limit.toString());
+		}
+		const queryString = searchParams.toString();
+		const url = queryString ? `/v1/categories?${queryString}` : '/v1/categories';
+		return apiClient.request(url);
 	},
 
 	async getCategory(id: string): Promise<GetCategoryResponse> {

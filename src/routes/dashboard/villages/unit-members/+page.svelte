@@ -20,6 +20,13 @@
 	let successMessage = $state('');
 	let showAddDialog = $state(false);
 	let isCreating = $state(false);
+
+	// Pagination state
+	let currentPage = $state(1);
+	let totalPages = $state(1);
+	let totalItems = $state(0);
+	let itemsPerPage = $state(10);
+
 	let addForm = $state({
 		name: '',
 		position: '',
@@ -36,9 +43,15 @@
 		try {
 			isLoading = true;
 			errorMessage = '';
-			const response = (await unitMemberApi.getUnitMembers()) as GetUnitMembersResponse;
+			const response = (await unitMemberApi.getUnitMembers({
+				page: currentPage,
+				limit: itemsPerPage
+			})) as GetUnitMembersResponse;
+
 			if (response.data) {
 				unitMembers = response.data.unit_members;
+				totalItems = response.data.total_data || 0;
+				totalPages = response.data.total_page || 1;
 			}
 		} catch (err) {
 			console.error('Error loading unit members:', err);
@@ -83,7 +96,14 @@
 			successMessage = '';
 			await unitMemberApi.deleteUnitMember(unitMemberId);
 			successMessage = $t('common.unit_member.messages.deleted');
-			await loadUnitMembers();
+
+			// If we're on the last page and it becomes empty, go to previous page
+			if (unitMembers.length === 1 && currentPage > 1) {
+				currentPage = currentPage - 1;
+				await loadUnitMembers();
+			} else {
+				await loadUnitMembers();
+			}
 		} catch (err) {
 			console.error('Error deleting unit member:', err);
 			errorMessage = err instanceof Error ? err.message : 'Failed to delete unit member';
@@ -146,6 +166,11 @@
 
 	async function handleRefresh() {
 		await Promise.all([loadUnitMembers(), loadUnits()]);
+	}
+
+	async function handlePageChange(page: number) {
+		currentPage = page;
+		await loadUnitMembers();
 	}
 
 	function dismissMessage() {
@@ -311,6 +336,11 @@
 		onUpdate={handleUpdate}
 		onDelete={handleDelete}
 		onAdd={openAddDialog}
+		{currentPage}
+		{totalPages}
+		{totalItems}
+		{itemsPerPage}
+		onPageChange={handlePageChange}
 	/>
 </div>
 

@@ -43,8 +43,19 @@ export const unitApi = {
 
 export const unitMemberApi = {
 	// Unit Member CRUD operations
-	async getUnitMembers(): Promise<GetUnitMembersResponse> {
-		return apiClient.request('/v1/units-members');
+	async getUnitMembers(params?: {
+		page?: number;
+		limit?: number;
+	}): Promise<GetUnitMembersResponse> {
+		const searchParams = new URLSearchParams();
+		if (params?.page) searchParams.append('page', params.page.toString());
+		if (params?.limit) searchParams.append('limit', params.limit.toString());
+
+		const url = searchParams.toString()
+			? `/v1/units-members?${searchParams.toString()}`
+			: '/v1/units-members';
+
+		return apiClient.request(url);
 	},
 
 	async getUnitMember(id: string): Promise<GetUnitMemberResponse> {

@@ -310,6 +310,17 @@
 			"update_error": "Failed to update unit member",
 			"delete_error": "Failed to delete unit member",
 			"load_error": "Failed to load unit members"
+		},
+		"pagination": {
+			"showing": "Showing",
+			"to": "to",
+			"of": "of",
+			"entries": "entries",
+			"show": "Show:",
+			"first": "First",
+			"previous": "Previous",
+			"next": "Next",
+			"last": "Last"
 		}
 	},
 	"article": {

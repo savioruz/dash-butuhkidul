@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button/index.js';
-	import { Edit, Trash2, Plus } from 'lucide-svelte';
+	import { Edit, Trash2, Plus, ChevronLeft, ChevronRight } from 'lucide-svelte';
 	import type { Category } from '$lib/types/category';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { t } from '$lib/i18n';
@@ -11,6 +11,11 @@
 		onEdit?: (category: Category) => void;
 		onDelete?: (categoryId: string) => void;
 		onAdd?: () => void;
+		currentPage?: number;
+		totalPages?: number;
+		totalItems?: number;
+		itemsPerPage?: number;
+		onPageChange?: (page: number) => void;
 	}
 
 	let {
@@ -18,7 +23,12 @@
 		isLoading = false,
 		onEdit = () => {},
 		onDelete = () => {},
-		onAdd = () => {}
+		onAdd = () => {},
+		currentPage = 1,
+		totalPages = 1,
+		totalItems = 0,
+		itemsPerPage = 10,
+		onPageChange = () => {}
 	}: Props = $props();
 
 	function openDeleteDialog(category: Category) {
@@ -31,6 +41,24 @@
 
 	function formatDate(dateString: string): string {
 		return new Date(dateString).toLocaleDateString('id-ID');
+	}
+
+	function goToPage(page: number) {
+		if (page >= 1 && page <= totalPages && page !== currentPage) {
+			onPageChange(page);
+		}
+	}
+
+	function nextPage() {
+		if (currentPage < totalPages) {
+			onPageChange(currentPage + 1);
+		}
+	}
+
+	function prevPage() {
+		if (currentPage > 1) {
+			onPageChange(currentPage - 1);
+		}
 	}
 </script>
 
@@ -146,5 +174,56 @@
 				← Scroll to see more →
 			</div>
 		</div>
+
+		<!-- Pagination Controls -->
+		{#if totalPages > 1}
+			<div class="mt-4 flex items-center justify-between">
+				<div class="text-sm text-muted-foreground">
+					Showing {(currentPage - 1) * itemsPerPage + 1} to {Math.min(
+						currentPage * itemsPerPage,
+						totalItems
+					)} of {totalItems} categories
+				</div>
+
+				<div class="flex items-center space-x-2">
+					<Button
+						variant="outline"
+						size="sm"
+						onclick={prevPage}
+						disabled={currentPage === 1}
+						class="h-8 w-8 p-0"
+					>
+						<ChevronLeft class="h-4 w-4" />
+					</Button>
+
+					<div class="flex items-center space-x-1">
+						{#each Array.from({ length: totalPages }, (_, i) => i + 1) as page (page)}
+							{#if page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)}
+								<Button
+									variant={page === currentPage ? 'default' : 'outline'}
+									size="sm"
+									onclick={() => goToPage(page)}
+									class="h-8 w-8 p-0"
+								>
+									{page}
+								</Button>
+							{:else if page === currentPage - 2 || page === currentPage + 2}
+								<span class="px-2 text-muted-foreground">...</span>
+							{/if}
+						{/each}
+					</div>
+
+					<Button
+						variant="outline"
+						size="sm"
+						onclick={nextPage}
+						disabled={currentPage === totalPages}
+						class="h-8 w-8 p-0"
+					>
+						<ChevronRight class="h-4 w-4" />
+					</Button>
+				</div>
+			</div>
+		{/if}
 	{/if}
 </div>

@@ -32,6 +32,8 @@ export interface GetArticlesResponse {
 		articles: Article[];
 		total_data: number;
 		total_page: number;
+		current_page: number;
+		limit: number;
 	};
 	articles?: Article[];
 	total_data?: number;

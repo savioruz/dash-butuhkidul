@@ -15,10 +15,24 @@ export type {
 	GetArticleResponse
 } from '$lib/types/article';
 
+export interface GetArticlesParams {
+	page?: number;
+	limit?: number;
+}
+
 export const articleApi = {
 	// Article CRUD operations
-	async getArticles(): Promise<GetArticlesResponse> {
-		const response = await apiClient.request('/v1/articles');
+	async getArticles(params?: GetArticlesParams): Promise<GetArticlesResponse> {
+		const searchParams = new URLSearchParams();
+		if (params?.page) {
+			searchParams.append('page', params.page.toString());
+		}
+		if (params?.limit) {
+			searchParams.append('limit', params.limit.toString());
+		}
+		const queryString = searchParams.toString();
+		const url = queryString ? `/v1/articles?${queryString}` : '/v1/articles';
+		const response = await apiClient.request(url);
 		return response as GetArticlesResponse;
 	},
 

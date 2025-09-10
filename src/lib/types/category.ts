@@ -15,6 +15,8 @@ export interface GetCategoriesData {
 	categories: Category[];
 	total_data: number;
 	total_page: number;
+	current_page: number;
+	limit: number;
 }
 
 export type GetCategoriesResponse = Response<GetCategoriesData>;

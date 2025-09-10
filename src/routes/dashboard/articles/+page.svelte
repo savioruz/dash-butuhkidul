@@ -19,6 +19,12 @@
 	let successMessage = $state('');
 	let showAddDialog = $state(false);
 	let isCreating = $state(false);
+
+	let currentPage = $state(1);
+	let totalPages = $state(1);
+	let totalItems = $state(0);
+	let itemsPerPage = $state(10);
+
 	let addForm = $state({
 		title: '',
 		content: '',
@@ -36,12 +42,17 @@
 		try {
 			isLoading = true;
 			errorMessage = '';
-			const response = await articleApi.getArticles();
+			const response = await articleApi.getArticles({
+				page: currentPage,
+				limit: itemsPerPage
+			});
 
 			// Handle the API response structure: { data: { articles: [...] } }
 			if (response && typeof response === 'object') {
 				if ('data' in response && response.data && 'articles' in response.data) {
 					articles = response.data.articles;
+					totalItems = response.data.total_data || 0;
+					totalPages = response.data.total_page || 1;
 				} else if ('articles' in response && response.articles) {
 					articles = response.articles;
 				} else {
@@ -145,6 +156,11 @@
 	function dismissMessage() {
 		errorMessage = '';
 		successMessage = '';
+	}
+
+	async function handlePageChange(page: number) {
+		currentPage = page;
+		await loadArticles();
 	}
 
 	function openAddDialog() {
@@ -276,6 +292,11 @@
 		onUpdate={handleUpdate}
 		onDelete={handleDelete}
 		onAdd={openAddDialog}
+		{currentPage}
+		{totalPages}
+		{totalItems}
+		{itemsPerPage}
+		onPageChange={handlePageChange}
 	/>
 </div>
 
