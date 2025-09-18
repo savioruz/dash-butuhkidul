@@ -24,6 +24,11 @@
 			"histories": "Sejarah Desa",
 			"units": "Unit",
 			"unit_members": "Anggota Unit"
+		},
+		"users": {
+			"title": "Pengguna",
+			"management": "Manajemen Pengguna",
+			"password": "Ganti Kata Sandi"
 		}
 	},
 	"finance": "Keuangan Homepage"

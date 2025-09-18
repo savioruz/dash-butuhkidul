@@ -203,3 +203,129 @@ export function logout(): void {
 		window.location.replace('/');
 	}
 }
+
+// ===== AUTHORIZATION FUNCTIONS =====
+
+/**
+ * User levels hierarchy
+ */
+export const USER_LEVELS = {
+	SUPER_ADMIN: 0,
+	ADMIN: 1,
+	USER: 2
+} as const;
+
+/**
+ * Get user level from JWT token
+ * @param token JWT token string (optional, will get from localStorage if not provided)
+ * @returns User level or null if invalid
+ */
+export function getUserLevel(token?: string): number | null {
+	try {
+		const accessToken = token || getAccessToken();
+		if (!accessToken) return null;
+
+		const payload = decodeJWT(accessToken);
+		if (!payload) return null;
+
+		// Role is stored as string in JWT, convert to number
+		const role = payload.role;
+		if (role === null || role === undefined) return null;
+
+		const numericRole = parseInt(role, 10);
+		return isNaN(numericRole) ? null : numericRole;
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Get user information from JWT token
+ * @param token JWT token string (optional, will get from localStorage if not provided)
+ * @returns User info or null if invalid
+ */
+export function getUserInfo(
+	token?: string
+): { id: string; email: string; level: number; full_name?: string } | null {
+	try {
+		const accessToken = token || getAccessToken();
+		if (!accessToken) return null;
+
+		const payload = decodeJWT(accessToken);
+		if (!payload) return null;
+
+		// Extract user info from JWT payload structure
+		const role = payload.role;
+		const level = role !== null && role !== undefined ? parseInt(role, 10) : null;
+
+		if (level === null || isNaN(level)) return null;
+
+		return {
+			id: payload.user_id || payload.sub,
+			email: payload.email,
+			level: level,
+			full_name: payload.full_name
+		};
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Check if user has required level or higher (lower number = higher permission)
+ * @param requiredLevel Minimum required level
+ * @param token JWT token string (optional, will get from localStorage if not provided)
+ * @returns true if user has required level or higher
+ */
+export function hasPermission(requiredLevel: number, token?: string): boolean {
+	const userLevel = getUserLevel(token);
+	if (userLevel === null) return false;
+
+	// Lower level number = higher permission
+	return userLevel <= requiredLevel;
+}
+
+/**
+ * Check if user is super admin (level 0)
+ * @param token JWT token string (optional, will get from localStorage if not provided)
+ * @returns true if user is super admin
+ */
+export function isSuperAdmin(token?: string): boolean {
+	return hasPermission(USER_LEVELS.SUPER_ADMIN, token);
+}
+
+/**
+ * Check if user is admin or higher (level 0 or 1)
+ * @param token JWT token string (optional, will get from localStorage if not provided)
+ * @returns true if user is admin or super admin
+ */
+export function isAdmin(token?: string): boolean {
+	return hasPermission(USER_LEVELS.ADMIN, token);
+}
+
+/**
+ * Require specific permission level - redirect if unauthorized
+ * @param requiredLevel Minimum required level
+ * @param redirectTo URL to redirect to if unauthorized (default: '/')
+ */
+export function requirePermission(requiredLevel: number, redirectTo: string = '/'): void {
+	if (!browser) return;
+
+	if (!isAuthenticated()) {
+		clearTokens();
+		window.location.href = '/';
+		return;
+	}
+
+	if (!hasPermission(requiredLevel)) {
+		window.location.href = redirectTo;
+	}
+}
+
+/**
+ * Require super admin permission
+ * @param redirectTo URL to redirect to if unauthorized (default: '/dashboard')
+ */
+export function requireSuperAdmin(redirectTo: string = '/dashboard'): void {
+	requirePermission(USER_LEVELS.SUPER_ADMIN, redirectTo);
+}

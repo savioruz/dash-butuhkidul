@@ -430,5 +430,91 @@
 			"delete_error": "Gagal menghapus artikel",
 			"load_error": "Gagal memuat artikel"
 		}
+	},
+	"user": {
+		"title": "Manajemen Pengguna",
+		"subtitle": "Kelola pengguna sistem dan hak akses mereka",
+		"add": "Tambah Pengguna",
+		"edit": "Edit Pengguna",
+		"delete": "Hapus Pengguna",
+		"not_found": "Tidak ada pengguna ditemukan",
+		"not_found_description": "Buat pengguna pertama Anda untuk memulai",
+		"fields": {
+			"email": "Email",
+			"full_name": "Nama Lengkap",
+			"level": "Level",
+			"is_verified": "Terverifikasi",
+			"active": "Aktif",
+			"last_login": "Login Terakhir",
+			"created_at": "Dibuat Pada",
+			"actions": "Aksi"
+		},
+		"levels": {
+			"0": "Super Admin",
+			"1": "Admin",
+			"2": "Pengguna"
+		},
+		"form": {
+			"create_title": "Buat Pengguna Baru",
+			"create_description": "Tambahkan pengguna baru ke sistem",
+			"edit_title": "Edit Pengguna",
+			"edit_description": "Perbarui informasi pengguna",
+			"change_password_title": "Ubah Kata Sandi",
+			"change_password_description": "Perbarui kata sandi pengguna",
+			"email": "Alamat Email",
+			"email_placeholder": "Masukkan alamat email",
+			"email_required": "Email diperlukan",
+			"full_name": "Nama Lengkap",
+			"full_name_placeholder": "Masukkan nama lengkap",
+			"full_name_required": "Nama lengkap diperlukan",
+			"password": "Kata Sandi",
+			"password_placeholder": "Masukkan kata sandi",
+			"password_required": "Kata sandi diperlukan",
+			"password_min": "Kata sandi minimal 8 karakter",
+			"old_password": "Kata Sandi Saat Ini",
+			"old_password_placeholder": "Masukkan kata sandi saat ini",
+			"new_password": "Kata Sandi Baru",
+			"new_password_placeholder": "Masukkan kata sandi baru",
+			"level": "Level Pengguna",
+			"level_placeholder": "Pilih level pengguna",
+			"level_required": "Level pengguna diperlukan",
+			"is_verified": "Email Terverifikasi",
+			"is_verified_description": "Tandai email sebagai terverifikasi",
+			"profile_image": "Gambar Profil",
+			"profile_image_optional": "(opsional)",
+			"submit_create": "Buat Pengguna",
+			"submit_update": "Perbarui Pengguna",
+			"submit_change_password": "Ubah Kata Sandi",
+			"cancel": "Batal",
+			"creating": "Membuat...",
+			"updating": "Memperbarui...",
+			"changing_password": "Mengubah..."
+		},
+		"table": {
+			"email": "Email",
+			"full_name": "Nama Lengkap",
+			"level": "Level",
+			"status": "Status",
+			"verified": "Terverifikasi",
+			"last_login": "Login Terakhir",
+			"created": "Dibuat",
+			"actions": "Aksi"
+		},
+		"status": {
+			"verified": "Terverifikasi",
+			"unverified": "Belum Verifikasi",
+			"never_logged_in": "Belum pernah login"
+		},
+		"messages": {
+			"create_success": "Pengguna berhasil dibuat",
+			"update_success": "Pengguna berhasil diperbarui",
+			"delete_success": "Pengguna berhasil dihapus",
+			"password_change_success": "Kata sandi berhasil diubah",
+			"create_error": "Gagal membuat pengguna",
+			"update_error": "Gagal memperbarui pengguna",
+			"delete_error": "Gagal menghapus pengguna",
+			"password_change_error": "Gagal mengubah kata sandi",
+			"load_error": "Gagal memuat pengguna"
+		}
 	}
 }

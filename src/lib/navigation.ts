@@ -9,7 +9,7 @@ export interface NavItem {
 
 export const navigationConfig: NavItem[] = [
 	{
-		href: base_url,
+		href: `https://${domainTrim}`,
 		label: 'Home',
 		translationKey: 'home'
 	},

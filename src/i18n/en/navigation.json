@@ -24,6 +24,11 @@
 			"histories": "Village Histories",
 			"units": "Units",
 			"unit_members": "Unit Members"
+		},
+		"users": {
+			"title": "Users",
+			"management": "User Management",
+			"password": "Change Password"
 		}
 	},
 	"finance": "Finance Homepage"

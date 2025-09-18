@@ -430,5 +430,91 @@
 			"delete_error": "Failed to delete article",
 			"load_error": "Failed to load articles"
 		}
+	},
+	"user": {
+		"title": "User Management",
+		"subtitle": "Manage system users and their permissions",
+		"add": "Add User",
+		"edit": "Edit User",
+		"delete": "Delete User",
+		"not_found": "No users found",
+		"not_found_description": "Create your first user to get started",
+		"fields": {
+			"email": "Email",
+			"full_name": "Full Name",
+			"level": "Level",
+			"is_verified": "Verified",
+			"active": "Active",
+			"last_login": "Last Login",
+			"created_at": "Created At",
+			"actions": "Actions"
+		},
+		"levels": {
+			"0": "Super Admin",
+			"1": "Admin",
+			"2": "User"
+		},
+		"form": {
+			"create_title": "Create New User",
+			"create_description": "Add a new user to the system",
+			"edit_title": "Edit User",
+			"edit_description": "Update user information",
+			"change_password_title": "Change Password",
+			"change_password_description": "Update user password",
+			"email": "Email Address",
+			"email_placeholder": "Enter email address",
+			"email_required": "Email is required",
+			"full_name": "Full Name",
+			"full_name_placeholder": "Enter full name",
+			"full_name_required": "Full name is required",
+			"password": "Password",
+			"password_placeholder": "Enter password",
+			"password_required": "Password is required",
+			"password_min": "Password must be at least 8 characters",
+			"old_password": "Current Password",
+			"old_password_placeholder": "Enter current password",
+			"new_password": "New Password",
+			"new_password_placeholder": "Enter new password",
+			"level": "User Level",
+			"level_placeholder": "Select user level",
+			"level_required": "User level is required",
+			"is_verified": "Email Verified",
+			"is_verified_description": "Mark email as verified",
+			"profile_image": "Profile Image",
+			"profile_image_optional": "(optional)",
+			"submit_create": "Create User",
+			"submit_update": "Update User",
+			"submit_change_password": "Change Password",
+			"cancel": "Cancel",
+			"creating": "Creating...",
+			"updating": "Updating...",
+			"changing_password": "Changing..."
+		},
+		"table": {
+			"email": "Email",
+			"full_name": "Full Name",
+			"level": "Level",
+			"status": "Status",
+			"verified": "Verified",
+			"last_login": "Last Login",
+			"created": "Created",
+			"actions": "Actions"
+		},
+		"status": {
+			"verified": "Verified",
+			"unverified": "Not Verified",
+			"never_logged_in": "Never logged in"
+		},
+		"messages": {
+			"create_success": "User created successfully",
+			"update_success": "User updated successfully",
+			"delete_success": "User deleted successfully",
+			"password_change_success": "Password changed successfully",
+			"create_error": "Failed to create user",
+			"update_error": "Failed to update user",
+			"delete_error": "Failed to delete user",
+			"password_change_error": "Failed to change password",
+			"load_error": "Failed to load users"
+		}
 	}
 }

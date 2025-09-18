@@ -1,10 +1,11 @@
 import { apiClient } from './client';
+import type { GetUsersResponse, GetUserResponse } from '$lib/types/user';
 
 export interface CreateUserRequest {
 	email: string;
 	full_name: string;
 	password: string;
-	level: '1' | '2';
+	level: '0' | '1';
 	is_verified?: boolean;
 	profile_image?: string;
 }
@@ -14,37 +15,41 @@ export interface UpdateProfileRequest {
 }
 
 export interface UpdateRoleRequest {
-	level: '1' | '2' | '3';
+	level: '0' | '1' | '2';
 }
 
 export interface ChangePasswordRequest {
-	old_password: string;
+	current_password: string;
 	new_password: string;
 }
 
-export interface UserFilters {
+export interface GetUsersParams {
 	email?: string;
 	full_name?: string;
 	level?: string;
 	is_verified?: boolean;
 	active?: boolean;
+	page?: number;
+	limit?: number;
 }
 
 export const usersApi = {
-	async getUsers(filters?: UserFilters) {
-		const params = new URLSearchParams();
-		if (filters) {
-			Object.entries(filters).forEach(([key, value]) => {
+	async getUsers(params?: GetUsersParams): Promise<GetUsersResponse> {
+		const searchParams = new URLSearchParams();
+		if (params) {
+			Object.entries(params).forEach(([key, value]) => {
 				if (value !== undefined) {
-					params.append(key, String(value));
+					searchParams.append(key, String(value));
 				}
 			});
 		}
+		const queryString = searchParams.toString();
+		const url = queryString ? `/v1/users?${queryString}` : '/v1/users';
+		return apiClient.request(url);
+	},
 
-		const query = params.toString();
-		const endpoint = query ? `/v1/users?${query}` : '/v1/users';
-
-		return apiClient.request(endpoint);
+	async getUser(id: string): Promise<GetUserResponse> {
+		return apiClient.request(`/v1/users/${id}`);
 	},
 
 	async createUser(data: CreateUserRequest) {
