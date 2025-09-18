@@ -8,7 +8,6 @@
 		CreateUnitRequest,
 		UpdateUnitRequest
 	} from '$lib/types/unit';
-	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
@@ -17,11 +16,10 @@
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 	import { RefreshCw, Plus } from 'lucide-svelte';
 	import { t } from '$lib/i18n';
+	import { toast } from 'svelte-sonner';
 
 	let units: Unit[] = $state([]);
 	let isLoading = $state(true);
-	let errorMessage = $state('');
-	let successMessage = $state('');
 	let showAddDialog = $state(false);
 	let isCreating = $state(false);
 	let addForm = $state({
@@ -36,14 +34,13 @@
 	async function loadUnits() {
 		try {
 			isLoading = true;
-			errorMessage = '';
 			const response = (await unitApi.getUnits()) as GetUnitsResponse;
 			if (response.data) {
 				units = response.data.units;
 			}
 		} catch (err) {
 			console.error('Error loading units:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to load units';
+			toast.error(err instanceof Error ? err.message : 'Failed to load units');
 		} finally {
 			isLoading = false;
 		}
@@ -51,14 +48,12 @@
 
 	async function handleUpdate(unitId: string, updatedData: UpdateUnitRequest) {
 		try {
-			errorMessage = '';
-			successMessage = '';
 			await unitApi.updateUnit(unitId, updatedData);
-			successMessage = $t('common.unit.messages.updated');
+			toast.success($t('common.unit.messages.updated'));
 			await loadUnits();
 		} catch (err) {
 			console.error('Error updating unit:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to update unit';
+			toast.error(err instanceof Error ? err.message : 'Failed to update unit');
 			throw err;
 		}
 	}
@@ -69,14 +64,12 @@
 		}
 
 		try {
-			errorMessage = '';
-			successMessage = '';
 			await unitApi.deleteUnit(unitId);
-			successMessage = $t('common.unit.messages.deleted');
+			toast.success($t('common.unit.messages.deleted'));
 			await loadUnits();
 		} catch (err) {
 			console.error('Error deleting unit:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to delete unit';
+			toast.error(err instanceof Error ? err.message : 'Failed to delete unit');
 		}
 	}
 
@@ -93,13 +86,13 @@
 			};
 
 			await unitApi.createUnit(createData);
-			successMessage = $t('common.unit.messages.created');
+			toast.success($t('common.unit.messages.created'));
 			showAddDialog = false;
 			addForm = { name: '', description: '' };
 			await loadUnits();
 		} catch (err) {
 			console.error('Error creating unit:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to create unit';
+			toast.error(err instanceof Error ? err.message : 'Failed to create unit');
 		} finally {
 			isCreating = false;
 		}
@@ -107,11 +100,6 @@
 
 	async function handleRefresh() {
 		await loadUnits();
-	}
-
-	function dismissMessage() {
-		errorMessage = '';
-		successMessage = '';
 	}
 
 	function openAddDialog() {
@@ -147,82 +135,6 @@
 			</Button>
 		</div>
 	</div>
-
-	{#if errorMessage}
-		<Card.Root class="border-destructive bg-destructive/5">
-			<Card.Content class="flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<div class="rounded-full bg-destructive/20 p-2">
-						<svg
-							class="h-4 w-4 text-destructive"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
-					</div>
-					<div>
-						<h3 class="font-medium text-destructive">Error</h3>
-						<p class="text-sm text-muted-foreground">{errorMessage}</p>
-					</div>
-				</div>
-				<Button variant="ghost" size="sm" onclick={dismissMessage}>
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				</Button>
-			</Card.Content>
-		</Card.Root>
-	{/if}
-
-	{#if successMessage}
-		<Card.Root class="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20">
-			<Card.Content class="flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<div class="rounded-full bg-green-100 p-2 dark:bg-green-900/50">
-						<svg
-							class="h-4 w-4 text-green-600 dark:text-green-400"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M5 13l4 4L19 7"
-							/>
-						</svg>
-					</div>
-					<div>
-						<h3 class="font-medium text-green-800 dark:text-green-200">Success</h3>
-						<p class="text-sm text-green-600 dark:text-green-400">{successMessage}</p>
-					</div>
-				</div>
-				<Button variant="ghost" size="sm" onclick={dismissMessage}>
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				</Button>
-			</Card.Content>
-		</Card.Root>
-	{/if}
 
 	<UnitList
 		{units}

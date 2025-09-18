@@ -7,11 +7,11 @@
 	import type { CreateTransactionRequest } from '$lib/api/transactions';
 	import TransactionList from '$lib/components/ui/transaction-list/transaction-list.svelte';
 	import TransactionForm from '$lib/components/ui/transaction-form/transaction-form.svelte';
-	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Plus, RefreshCw } from 'lucide-svelte';
 	import { t } from '$lib/i18n';
+	import { toast } from 'svelte-sonner';
 
 	let transactions = $state<Transaction[]>([]);
 	let categories = $state<Category[]>([]);
@@ -19,8 +19,6 @@
 	let showForm = $state(false);
 	let editingTransaction = $state<Transaction | null>(null);
 	let isSubmitting = $state(false);
-	let errorMessage = $state('');
-	let successMessage = $state('');
 
 	let currentPage = $state(1);
 	let totalPages = $state(1);
@@ -34,7 +32,6 @@
 	async function loadTransactions() {
 		try {
 			isLoading = true;
-			errorMessage = '';
 			const response = (await transactionsApi.getTransactions({
 				type: 'expense',
 				page: currentPage,
@@ -46,7 +43,7 @@
 			totalPages = response.data?.total_page || 1;
 		} catch (error) {
 			console.error('Error loading expense transactions:', error);
-			errorMessage = error instanceof Error ? error.message : 'Failed to load transactions';
+			toast.error(error instanceof Error ? error.message : 'Failed to load transactions');
 		} finally {
 			isLoading = false;
 		}
@@ -64,29 +61,23 @@
 	function handleAdd() {
 		editingTransaction = null;
 		showForm = true;
-		errorMessage = '';
-		successMessage = '';
 	}
 
 	function handleEdit(transaction: Transaction) {
 		editingTransaction = transaction;
 		showForm = true;
-		errorMessage = '';
-		successMessage = '';
 	}
 
 	async function handleSave(data: CreateTransactionRequest) {
 		try {
 			isSubmitting = true;
-			errorMessage = '';
-			successMessage = '';
 
 			if (editingTransaction) {
 				await transactionsApi.updateTransaction(editingTransaction.id, data);
-				successMessage = 'Transaction updated successfully!';
+				toast.success('Transaction updated successfully!');
 			} else {
 				await transactionsApi.createTransaction(data);
-				successMessage = 'Expense transaction created successfully!';
+				toast.success('Expense transaction created successfully!');
 			}
 
 			await loadTransactions();
@@ -94,7 +85,7 @@
 			editingTransaction = null;
 		} catch (error) {
 			console.error('Error saving transaction:', error);
-			errorMessage = error instanceof Error ? error.message : 'Failed to save transaction';
+			toast.error(error instanceof Error ? error.message : 'Failed to save transaction');
 		} finally {
 			isSubmitting = false;
 		}
@@ -102,33 +93,25 @@
 
 	async function handleDelete(transactionId: string) {
 		try {
-			errorMessage = '';
-			successMessage = '';
 			await transactionsApi.deleteTransaction(transactionId);
-			successMessage = $t('common.transaction.messages.deleted');
+			toast.success($t('common.transaction.messages.deleted'));
 			await loadTransactions();
 		} catch (error) {
 			console.error('Error deleting transaction:', error);
-			errorMessage =
-				error instanceof Error ? error.message : $t('common.transaction.messages.delete_error');
+			toast.error(
+				error instanceof Error ? error.message : $t('common.transaction.messages.delete_error')
+			);
 		}
 	}
 
 	function handleCancel() {
 		showForm = false;
 		editingTransaction = null;
-		errorMessage = '';
-		successMessage = '';
 	}
 
 	async function handleRefresh() {
 		await loadTransactions();
 		await loadCategories();
-	}
-
-	function dismissMessage() {
-		errorMessage = '';
-		successMessage = '';
 	}
 
 	async function handlePageChange(page: number) {
@@ -139,7 +122,7 @@
 	async function handleUpdate(transactionId: string, updatedData: Partial<Transaction>) {
 		try {
 			await transactionsApi.updateTransaction(transactionId, updatedData);
-			successMessage = 'Transaction updated successfully';
+			toast.success('Transaction updated successfully');
 			await loadTransactions();
 		} catch (error) {
 			console.error('Error updating transaction:', error);
@@ -188,44 +171,6 @@
 			</div>
 		{/if}
 	</div>
-
-	<!-- Success Message -->
-	{#if successMessage}
-		<Card.Root class="border-green-200 bg-green-50">
-			<Card.Content>
-				<div class="flex items-center justify-between">
-					<p class="text-green-600">{successMessage}</p>
-					<Button
-						variant="ghost"
-						onclick={dismissMessage}
-						size="sm"
-						class="text-green-600 hover:text-green-700"
-					>
-						×
-					</Button>
-				</div>
-			</Card.Content>
-		</Card.Root>
-	{/if}
-
-	<!-- Error Message -->
-	{#if errorMessage}
-		<Card.Root class="border-red-200 bg-red-50">
-			<Card.Content>
-				<div class="flex items-center justify-between">
-					<p class="text-red-600">{errorMessage}</p>
-					<Button
-						variant="ghost"
-						onclick={dismissMessage}
-						size="sm"
-						class="text-red-600 hover:text-red-700"
-					>
-						×
-					</Button>
-				</div>
-			</Card.Content>
-		</Card.Root>
-	{/if}
 
 	<!-- Form or List -->
 	{#if showForm}

@@ -8,6 +8,7 @@
 	import Navbar from '@/components/ui/navbar/navbar.svelte';
 	import { loadTranslations, locale } from '$lib/i18n';
 	import { onMount } from 'svelte';
+	import { Toaster } from '@/components/ui/sonner';
 
 	let { children, data } = $props();
 
@@ -58,6 +59,7 @@
 </svelte:head>
 
 <ModeWatcher />
+<Toaster richColors closeButton position="bottom-right" />
 
 {#if page.error?.message}
 	<Error status={page.status} message={page.error.message} />

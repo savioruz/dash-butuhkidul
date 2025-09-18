@@ -27,6 +27,7 @@
 		UpdateRoleRequest,
 		ChangePasswordRequest
 	} from '$lib/types/user';
+	import { toast } from 'svelte-sonner';
 
 	// State
 	let users = $state<User[]>([]);
@@ -34,24 +35,6 @@
 	let totalData = $state(0);
 	let currentPage = $state(1);
 	let itemsPerPage = $state(10);
-	let errorMessage = $state('');
-	let successMessage = $state('');
-
-	function showError(message: string) {
-		errorMessage = message;
-		successMessage = '';
-		setTimeout(() => {
-			errorMessage = '';
-		}, 5000);
-	}
-
-	function showSuccess(message: string) {
-		successMessage = message;
-		errorMessage = '';
-		setTimeout(() => {
-			successMessage = '';
-		}, 3000);
-	}
 
 	// Form states
 	let showCreateDialog = $state(false);
@@ -94,7 +77,7 @@
 			totalData = response.data?.total_data || 0;
 		} catch (error) {
 			console.error('Error loading users:', error);
-			showError(error instanceof Error ? error.message : $t('common.user.messages.load_error'));
+			toast.error(error instanceof Error ? error.message : $t('common.user.messages.load_error'));
 			users = [];
 		} finally {
 			isLoading = false;
@@ -106,12 +89,12 @@
 			isSubmitting = true;
 
 			await usersApi.createUser(data);
-			showSuccess($t('common.user.messages.create_success'));
+			toast.success($t('common.user.messages.create_success'));
 			showCreateDialog = false;
 			await loadUsers();
 		} catch (error) {
 			console.error('Error creating user:', error);
-			showError(error instanceof Error ? error.message : $t('common.user.messages.create_error'));
+			toast.error(error instanceof Error ? error.message : $t('common.user.messages.create_error'));
 		} finally {
 			isSubmitting = false;
 		}
@@ -124,13 +107,13 @@
 			isSubmitting = true;
 
 			await usersApi.updateProfile(editingUser.id, data);
-			showSuccess($t('common.user.messages.update_success'));
+			toast.success($t('common.user.messages.update_success'));
 			showEditDialog = false;
 			editingUser = null;
 			await loadUsers();
 		} catch (error) {
 			console.error('Error updating user:', error);
-			showError(error instanceof Error ? error.message : $t('common.user.messages.update_error'));
+			toast.error(error instanceof Error ? error.message : $t('common.user.messages.update_error'));
 		} finally {
 			isSubmitting = false;
 		}
@@ -150,12 +133,12 @@
 			isSubmitting = true;
 
 			await usersApi.changePassword(data);
-			showSuccess($t('common.user.messages.password_change_success'));
+			toast.success($t('common.user.messages.password_change_success'));
 			showPasswordDialog = false;
 			editingUser = null;
 		} catch (error) {
 			console.error('Error changing password:', error);
-			showError(
+			toast.error(
 				error instanceof Error ? error.message : $t('common.user.messages.password_change_error')
 			);
 		} finally {
@@ -170,13 +153,13 @@
 			isSubmitting = true;
 
 			await usersApi.updateRole(editingUser.id, data);
-			showSuccess($t('common.user.messages.update_success'));
+			toast.success($t('common.user.messages.update_success'));
 			showRoleDialog = false;
 			editingUser = null;
 			await loadUsers();
 		} catch (error) {
 			console.error('Error updating role:', error);
-			showError(error instanceof Error ? error.message : $t('common.user.messages.update_error'));
+			toast.error(error instanceof Error ? error.message : $t('common.user.messages.update_error'));
 		} finally {
 			isSubmitting = false;
 		}
@@ -187,11 +170,11 @@
 
 		try {
 			await usersApi.deleteUser(userId);
-			showSuccess($t('common.user.messages.delete_success'));
+			toast.success($t('common.user.messages.delete_success'));
 			await loadUsers();
 		} catch (error) {
 			console.error('Error deleting user:', error);
-			showError(error instanceof Error ? error.message : $t('common.user.messages.delete_error'));
+			toast.error(error instanceof Error ? error.message : $t('common.user.messages.delete_error'));
 		}
 	}
 
@@ -275,33 +258,6 @@
 			</Button>
 		</div>
 	</div>
-
-	<!-- Error/Success Messages -->
-	{#if errorMessage}
-		<div class="rounded-md bg-red-50 p-4">
-			<div class="flex">
-				<div class="ml-3">
-					<h3 class="text-sm font-medium text-red-800">Error</h3>
-					<div class="mt-2 text-sm text-red-700">
-						<p>{errorMessage}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	{/if}
-
-	{#if successMessage}
-		<div class="rounded-md bg-green-50 p-4">
-			<div class="flex">
-				<div class="ml-3">
-					<h3 class="text-sm font-medium text-green-800">Success</h3>
-					<div class="mt-2 text-sm text-green-700">
-						<p>{successMessage}</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	{/if}
 
 	<!-- Filters -->
 	{#if showFilters}

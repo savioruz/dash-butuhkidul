@@ -3,7 +3,6 @@
 	import { articleApi } from '$lib/api/articles';
 	import { ArticleList } from '$lib/components/ui/article-list';
 	import type { Article, CreateArticleRequest, UpdateArticleRequest } from '$lib/types/article';
-	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Tooltip from '$lib/components/ui/tooltip/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
@@ -12,11 +11,10 @@
 	import { MarkdownEditor } from '$lib/components/ui/markdown-editor/index.js';
 	import { RefreshCw, Plus } from 'lucide-svelte';
 	import { t } from '$lib/i18n';
+	import { toast } from 'svelte-sonner';
 
 	let articles = $state<Article[]>([]);
 	let isLoading = $state(true);
-	let errorMessage = $state('');
-	let successMessage = $state('');
 	let showAddDialog = $state(false);
 	let isCreating = $state(false);
 
@@ -47,12 +45,12 @@
 		}
 		autoSaveTimer = setTimeout(() => {
 			saveDraft();
-		}, 2000); // Auto-save every 2 seconds after user stops typing
+		}, 2000);
 	}
 
 	function saveDraft() {
 		if (!addForm.title.trim() && !addForm.content.trim()) {
-			return; // Don't save empty drafts
+			return;
 		}
 
 		const draftData = {
@@ -131,7 +129,6 @@
 	async function loadArticles() {
 		try {
 			isLoading = true;
-			errorMessage = '';
 			const response = await articleApi.getArticles({
 				page: currentPage,
 				limit: itemsPerPage
@@ -153,7 +150,7 @@
 			}
 		} catch (err) {
 			console.error('Error loading articles:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to load articles';
+			toast.error(err instanceof Error ? err.message : 'Failed to load articles');
 			articles = [];
 		} finally {
 			isLoading = false;
@@ -166,15 +163,12 @@
 		file?: File | null
 	) {
 		try {
-			errorMessage = '';
-			successMessage = '';
 			await articleApi.updateArticle(articleId, updatedData, file || undefined);
-			successMessage = $t('common.article.messages.update_success');
+			toast.success($t('common.article.messages.update_success'));
 			await loadArticles();
 		} catch (err) {
 			console.error('Error updating article:', err);
-			errorMessage =
-				err instanceof Error ? err.message : $t('common.article.messages.update_error');
+			toast.error(err instanceof Error ? err.message : $t('common.article.messages.update_error'));
 			throw err;
 		}
 	}
@@ -185,15 +179,12 @@
 		}
 
 		try {
-			errorMessage = '';
-			successMessage = '';
 			await articleApi.deleteArticle(articleId);
-			successMessage = $t('common.article.messages.delete_success');
+			toast.success($t('common.article.messages.delete_success'));
 			await loadArticles();
 		} catch (err) {
 			console.error('Error deleting article:', err);
-			errorMessage =
-				err instanceof Error ? err.message : $t('common.article.messages.delete_error');
+			toast.error(err instanceof Error ? err.message : $t('common.article.messages.delete_error'));
 		}
 	}
 
@@ -219,7 +210,7 @@
 			};
 
 			await articleApi.createArticle(createData, selectedFile || undefined);
-			successMessage = $t('common.article.messages.create_success');
+			toast.success($t('common.article.messages.create_success'));
 			showAddDialog = false;
 
 			// Clear form and draft after successful creation
@@ -236,8 +227,7 @@
 			await loadArticles();
 		} catch (err) {
 			console.error('Error creating article:', err);
-			errorMessage =
-				err instanceof Error ? err.message : $t('common.article.messages.create_error');
+			toast.error(err instanceof Error ? err.message : $t('common.article.messages.create_error'));
 		} finally {
 			isCreating = false;
 		}
@@ -246,6 +236,7 @@
 	function saveDraftAndClose() {
 		saveDraft();
 		showAddDialog = false;
+		toast.success('Draft saved successfully');
 	}
 
 	function handleDialogClose() {
@@ -268,11 +259,6 @@
 
 	async function handleRefresh() {
 		await loadArticles();
-	}
-
-	function dismissMessage() {
-		errorMessage = '';
-		successMessage = '';
 	}
 
 	async function handlePageChange(page: number) {
@@ -351,82 +337,6 @@
 			</Tooltip.Root>
 		</div>
 	</div>
-
-	{#if errorMessage}
-		<Card.Root class="border-destructive bg-destructive/5">
-			<Card.Content class="flex items-center justify-between pt-6">
-				<div class="flex items-center gap-3">
-					<div class="rounded-full bg-destructive/20 p-2">
-						<svg
-							class="h-4 w-4 text-destructive"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
-					</div>
-					<div>
-						<h3 class="font-medium text-destructive">Error</h3>
-						<p class="text-sm text-muted-foreground">{errorMessage}</p>
-					</div>
-				</div>
-				<Button variant="ghost" size="sm" onclick={dismissMessage}>
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				</Button>
-			</Card.Content>
-		</Card.Root>
-	{/if}
-
-	{#if successMessage}
-		<Card.Root class="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20">
-			<Card.Content class="flex items-center justify-between pt-6">
-				<div class="flex items-center gap-3">
-					<div class="rounded-full bg-green-100 p-2 dark:bg-green-900/50">
-						<svg
-							class="h-4 w-4 text-green-600 dark:text-green-400"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M5 13l4 4L19 7"
-							/>
-						</svg>
-					</div>
-					<div>
-						<h3 class="font-medium text-green-800 dark:text-green-200">Success</h3>
-						<p class="text-sm text-green-600 dark:text-green-400">{successMessage}</p>
-					</div>
-				</div>
-				<Button variant="ghost" size="sm" onclick={dismissMessage}>
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				</Button>
-			</Card.Content>
-		</Card.Root>
-	{/if}
 
 	<ArticleList
 		{articles}

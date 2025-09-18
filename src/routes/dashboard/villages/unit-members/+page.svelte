@@ -12,12 +12,11 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { RefreshCw, Plus } from 'lucide-svelte';
 	import { t } from '$lib/i18n';
+	import { toast } from 'svelte-sonner';
 
 	let unitMembers: UnitMember[] = $state([]);
 	let units: Unit[] = $state([]);
 	let isLoading = $state(true);
-	let errorMessage = $state('');
-	let successMessage = $state('');
 	let showAddDialog = $state(false);
 	let isCreating = $state(false);
 
@@ -42,7 +41,6 @@
 	async function loadUnitMembers() {
 		try {
 			isLoading = true;
-			errorMessage = '';
 			const response = (await unitMemberApi.getUnitMembers({
 				page: currentPage,
 				limit: itemsPerPage
@@ -55,7 +53,7 @@
 			}
 		} catch (err) {
 			console.error('Error loading unit members:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to load unit members';
+			toast.error(err instanceof Error ? err.message : 'Failed to load unit members');
 		} finally {
 			isLoading = false;
 		}
@@ -74,14 +72,12 @@
 
 	async function handleUpdate(unitMemberId: string, updatedData: FormData) {
 		try {
-			errorMessage = '';
-			successMessage = '';
 			await unitMemberApi.updateUnitMember(unitMemberId, updatedData);
-			successMessage = $t('common.unit_member.messages.updated');
+			toast.success($t('common.unit_member.messages.updated'));
 			await loadUnitMembers();
 		} catch (err) {
 			console.error('Error updating unit member:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to update unit member';
+			toast.error(err instanceof Error ? err.message : 'Failed to update unit member');
 			throw err;
 		}
 	}
@@ -92,10 +88,8 @@
 		}
 
 		try {
-			errorMessage = '';
-			successMessage = '';
 			await unitMemberApi.deleteUnitMember(unitMemberId);
-			successMessage = $t('common.unit_member.messages.deleted');
+			toast.success($t('common.unit_member.messages.deleted'));
 
 			// If we're on the last page and it becomes empty, go to previous page
 			if (unitMembers.length === 1 && currentPage > 1) {
@@ -106,7 +100,7 @@
 			}
 		} catch (err) {
 			console.error('Error deleting unit member:', err);
-			errorMessage = err instanceof Error ? err.message : 'Failed to delete unit member';
+			toast.error(err instanceof Error ? err.message : 'Failed to delete unit member');
 		}
 	}
 
@@ -150,7 +144,7 @@
 			}
 
 			await unitMemberApi.createUnitMember(formData);
-			successMessage = $t('common.unit_member.messages.created');
+			toast.success($t('common.unit_member.messages.created'));
 			showAddDialog = false;
 			addForm = { name: '', position: '', unit_id: '' };
 			selectedFile = null;
@@ -171,11 +165,6 @@
 	async function handlePageChange(page: number) {
 		currentPage = page;
 		await loadUnitMembers();
-	}
-
-	function dismissMessage() {
-		errorMessage = '';
-		successMessage = '';
 	}
 
 	function openAddDialog() {
@@ -213,82 +202,6 @@
 			</Button>
 		</div>
 	</div>
-
-	{#if errorMessage}
-		<Card.Root class="border-destructive bg-destructive/5">
-			<Card.Content class="flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<div class="rounded-full bg-destructive/20 p-2">
-						<svg
-							class="h-4 w-4 text-destructive"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M6 18L18 6M6 6l12 12"
-							/>
-						</svg>
-					</div>
-					<div>
-						<h3 class="font-medium text-destructive">Error</h3>
-						<p class="text-sm text-muted-foreground">{errorMessage}</p>
-					</div>
-				</div>
-				<Button variant="ghost" size="sm" onclick={dismissMessage}>
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				</Button>
-			</Card.Content>
-		</Card.Root>
-	{/if}
-
-	{#if successMessage}
-		<Card.Root class="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-950/20">
-			<Card.Content class="flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					<div class="rounded-full bg-green-100 p-2 dark:bg-green-900/50">
-						<svg
-							class="h-4 w-4 text-green-600 dark:text-green-400"
-							fill="none"
-							stroke="currentColor"
-							viewBox="0 0 24 24"
-						>
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M5 13l4 4L19 7"
-							/>
-						</svg>
-					</div>
-					<div>
-						<h3 class="font-medium text-green-800 dark:text-green-200">Success</h3>
-						<p class="text-sm text-green-600 dark:text-green-400">{successMessage}</p>
-					</div>
-				</div>
-				<Button variant="ghost" size="sm" onclick={dismissMessage}>
-					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M6 18L18 6M6 6l12 12"
-						/>
-					</svg>
-				</Button>
-			</Card.Content>
-		</Card.Root>
-	{/if}
 
 	{#if units.length === 0 && !isLoading}
 		<Card.Root class="border-yellow-200 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-950/20">

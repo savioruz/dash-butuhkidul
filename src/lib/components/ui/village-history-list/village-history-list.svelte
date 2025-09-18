@@ -114,7 +114,6 @@
 </script>
 
 <div class="space-y-4">
-	4
 	{#if isLoading}
 		<div class="flex items-center justify-center py-8 text-muted-foreground">
 			<div class="flex items-center gap-2">
