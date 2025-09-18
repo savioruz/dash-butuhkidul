@@ -34,8 +34,98 @@
 	let addFormActiveStatus = $state('true');
 	let selectedFile: File | null = $state(null);
 
+	// Draft functionality
+	let isDraft = $state(false);
+	let autoSaveTimer: ReturnType<typeof setTimeout> | null = null;
+	let lastSaved = $state<Date | null>(null);
+	let draftKey = 'article-draft';
+
+	// Auto-save functionality
+	function scheduleAutoSave() {
+		if (autoSaveTimer) {
+			clearTimeout(autoSaveTimer);
+		}
+		autoSaveTimer = setTimeout(() => {
+			saveDraft();
+		}, 2000); // Auto-save every 2 seconds after user stops typing
+	}
+
+	function saveDraft() {
+		if (!addForm.title.trim() && !addForm.content.trim()) {
+			return; // Don't save empty drafts
+		}
+
+		const draftData = {
+			...addForm,
+			selectedFileName: selectedFile?.name || null,
+			savedAt: new Date().toISOString()
+		};
+
+		localStorage.setItem(draftKey, JSON.stringify(draftData));
+		lastSaved = new Date();
+		isDraft = true;
+	}
+
+	function loadDraft() {
+		try {
+			const saved = localStorage.getItem(draftKey);
+			if (saved) {
+				const draftData = JSON.parse(saved);
+				addForm = {
+					title: draftData.title || '',
+					content: draftData.content || '',
+					active: draftData.active !== undefined ? draftData.active : true,
+					published_at: draftData.published_at || ''
+				};
+				addFormActiveStatus = addForm.active ? 'true' : 'false';
+				lastSaved = new Date(draftData.savedAt);
+				isDraft = true;
+				return true;
+			}
+		} catch (error) {
+			console.error('Error loading draft:', error);
+		}
+		return false;
+	}
+
+	function clearDraft() {
+		localStorage.removeItem(draftKey);
+		isDraft = false;
+		lastSaved = null;
+	}
+
+	function restoreDraft() {
+		if (loadDraft()) {
+			showAddDialog = true;
+		}
+	}
+
+	// Watch for changes to auto-save
+	$effect(() => {
+		if (showAddDialog && (addForm.title || addForm.content)) {
+			scheduleAutoSave();
+		}
+	});
+
 	onMount(async () => {
 		await loadArticles();
+		// Check for existing draft
+		loadDraft();
+	});
+
+	// Add beforeunload listener separately
+	$effect(() => {
+		if (typeof window !== 'undefined') {
+			window.addEventListener('beforeunload', handleBeforeUnload);
+
+			// Cleanup function
+			return () => {
+				window.removeEventListener('beforeunload', handleBeforeUnload);
+				if (autoSaveTimer) {
+					clearTimeout(autoSaveTimer);
+				}
+			};
+		}
 	});
 
 	async function loadArticles() {
@@ -131,6 +221,8 @@
 			await articleApi.createArticle(createData, selectedFile || undefined);
 			successMessage = $t('common.article.messages.create_success');
 			showAddDialog = false;
+
+			// Clear form and draft after successful creation
 			addForm = {
 				title: '',
 				content: '',
@@ -139,6 +231,8 @@
 			};
 			addFormActiveStatus = 'true';
 			selectedFile = null;
+			clearDraft(); // Clear the saved draft
+
 			await loadArticles();
 		} catch (err) {
 			console.error('Error creating article:', err);
@@ -146,6 +240,29 @@
 				err instanceof Error ? err.message : $t('common.article.messages.create_error');
 		} finally {
 			isCreating = false;
+		}
+	}
+
+	function saveDraftAndClose() {
+		saveDraft();
+		showAddDialog = false;
+	}
+
+	function handleDialogClose() {
+		if (addForm.title.trim() || addForm.content.trim()) {
+			if (confirm('You have unsaved changes. Do you want to save as draft before closing?')) {
+				saveDraft();
+			}
+		}
+		showAddDialog = false;
+	}
+
+	// Warn user before leaving page with unsaved changes
+	function handleBeforeUnload(event: BeforeUnloadEvent) {
+		if (showAddDialog && (addForm.title.trim() || addForm.content.trim())) {
+			saveDraft(); // Auto-save before page unload
+			event.preventDefault();
+			event.returnValue = '';
 		}
 	}
 
@@ -172,6 +289,7 @@
 		};
 		addFormActiveStatus = 'true';
 		selectedFile = null;
+		clearDraft(); // Clear any existing draft when starting fresh
 		showAddDialog = true;
 	}
 </script>
@@ -187,6 +305,30 @@
 			<p class="text-muted-foreground">{$t('common.article.subtitle')}</p>
 		</div>
 		<div class="flex gap-2">
+			{#if isDraft}
+				<Tooltip.Root>
+					<Tooltip.Trigger>
+						<Button variant="secondary" size="sm" onclick={restoreDraft}>
+							<svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+								/>
+							</svg>
+							Continue Draft
+						</Button>
+					</Tooltip.Trigger>
+					<Tooltip.Content>
+						<p>
+							Continue writing your saved draft{lastSaved
+								? ` (saved ${lastSaved.toLocaleTimeString()})`
+								: ''}
+						</p>
+					</Tooltip.Content>
+				</Tooltip.Root>
+			{/if}
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					<Button variant="outline" size="icon" onclick={handleRefresh} disabled={isLoading}>
@@ -304,8 +446,22 @@
 <Dialog.Root bind:open={showAddDialog}>
 	<Dialog.Content class="max-h-[85vh] max-w-3xl overflow-y-auto md:max-w-4xl lg:max-w-5xl">
 		<Dialog.Header>
-			<Dialog.Title>{$t('common.article.form.add_title')}</Dialog.Title>
-			<Dialog.Description>{$t('common.article.form.add_description')}</Dialog.Description>
+			<Dialog.Title>
+				{$t('common.article.form.add_title')}
+				{#if isDraft && lastSaved}
+					<span class="ml-2 text-sm font-normal text-muted-foreground">
+						(Draft saved at {lastSaved.toLocaleTimeString()})
+					</span>
+				{/if}
+			</Dialog.Title>
+			<Dialog.Description>
+				{$t('common.article.form.add_description')}
+				{#if isDraft}
+					<span class="mt-1 block text-sm text-blue-600">
+						📝 Your work is being auto-saved as you type
+					</span>
+				{/if}
+			</Dialog.Description>
 		</Dialog.Header>
 		<form onsubmit={handleAdd} class="space-y-4">
 			<div class="grid gap-4">
@@ -376,10 +532,23 @@
 				</div>
 			</div>
 		</form>
-		<Dialog.Footer>
-			<Button variant="outline" onclick={() => (showAddDialog = false)}
-				>{$t('common.article.form.cancel')}</Button
-			>
+		<Dialog.Footer class="flex justify-between">
+			<div class="flex gap-2">
+				<Button variant="outline" onclick={saveDraftAndClose}>
+					<svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3-3m0 0l-3 3m3-3v12"
+						/>
+					</svg>
+					Save as Draft
+				</Button>
+				<Button variant="outline" onclick={handleDialogClose}>
+					{$t('common.article.form.cancel')}
+				</Button>
+			</div>
 			<Button onclick={handleAdd} disabled={isCreating}>
 				{isCreating ? $t('common.article.form.creating') : $t('common.article.form.submit_create')}
 			</Button>
