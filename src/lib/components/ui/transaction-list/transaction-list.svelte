@@ -63,9 +63,8 @@
 		inactiveText = $t('common.status.inactive');
 	});
 
-	function getCategoryName(categoryId: string): string {
-		const category = categories.find((c) => c.id === categoryId);
-		return category?.name || 'Unknown Category';
+	function getCategoryName(transaction: Transaction): string {
+		return transaction.category_name || 'Unknown Category';
 	}
 
 	function openProofDialog(transaction: Transaction) {
@@ -189,7 +188,7 @@
 							</td>
 							<td
 								class="max-w-[90px] truncate p-2 text-xs whitespace-nowrap sm:p-3 sm:text-sm"
-								title={getCategoryName(t.category)}>{getCategoryName(t.category)}</td
+								title={getCategoryName(t)}>{getCategoryName(t)}</td
 							>
 							<td
 								class="max-w-[120px] truncate p-2 text-xs sm:max-w-[160px] sm:p-3 sm:text-sm"
@@ -313,7 +312,7 @@
 				{#if selectedProofTransaction}
 					<Dialog.Description>
 						{selectedProofTransaction.type === 'income' ? 'Income' : 'Expense'} -
-						{getCategoryName(selectedProofTransaction.category)} -
+						{getCategoryName(selectedProofTransaction)} -
 						{formatAmount(selectedProofTransaction.amount)}
 					</Dialog.Description>
 				{/if}
@@ -326,10 +325,10 @@
 							alt="Transaction proof"
 							class="max-h-[400px] max-w-full rounded-lg object-contain shadow-lg"
 							onerror={(e) => {
-								const target = e.target;
+								const target = e.target as HTMLImageElement;
 								if (target) {
 									target.style.display = 'none';
-									const sibling = target.nextElementSibling;
+									const sibling = target.nextElementSibling as HTMLElement;
 									if (sibling) sibling.style.display = 'block';
 								}
 							}}
