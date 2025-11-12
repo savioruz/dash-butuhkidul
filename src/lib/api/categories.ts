@@ -16,6 +16,7 @@ export interface UpdateCategoryRequest {
 export interface GetCategoriesParams {
 	page?: number;
 	limit?: number;
+	name?: string;
 }
 
 export const categoriesApi = {
@@ -26,6 +27,9 @@ export const categoriesApi = {
 		}
 		if (params?.limit) {
 			searchParams.append('limit', params.limit.toString());
+		}
+		if (params?.name) {
+			searchParams.append('name', params.name);
 		}
 		const queryString = searchParams.toString();
 		const url = queryString ? `/v1/categories?${queryString}` : '/v1/categories';
