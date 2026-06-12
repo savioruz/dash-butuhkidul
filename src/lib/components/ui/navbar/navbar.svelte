@@ -29,7 +29,7 @@
 				<a
 					href={item.href}
 					class="smooth-transition text-xs font-medium md:text-sm {isActive
-						? 'text-gradient'
+						? 'text-primary font-semibold'
 						: 'animated-underline'}"
 					data-sveltekit-preload-data
 				>
